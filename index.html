@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWE Draft Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>WWE Draft Simulator</h1>
+        <div class="budget-tracker">
+            <h2>Remaining Budget: <span id="budget-display">$4,000,000</span></h2>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="roster-pool">
+            <h2>Available Superstars</h2>
+            <div class="filters">
+                <input type="text" id="name-filter" placeholder="Search by name...">
+                <select id="class-filter">
+                    <option value="all">All Classes</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+                <select id="gender-filter">
+                    <option value="all">All Genders</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div id="superstar-list" class="superstar-grid">
+                <!-- Superstars will be loaded here by JavaScript -->
+            </div>
+        </div>
+
+        <div class="drafted-roster">
+            <h2>Your Roster</h2>
+            <ul id="drafted-list">
+                <!-- Drafted superstars will appear here -->
+            </ul>
+            <div id="synergy-bonus" class="synergy-bonus">
+                <h3>Synergy Bonuses</h3>
+                <ul id="synergy-list">
+                    <!-- Synergy bonuses will be listed here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

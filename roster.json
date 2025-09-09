@@ -1,0 +1,1446 @@
+{
+  "superstars": [
+    {
+      "name": "Dirty Dominik Mysterio",
+      "cost": 263000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 70,
+      "pop": 60,
+      "team": "The Judgment Day"
+    },
+    {
+      "name": "AJ Styles",
+      "cost": 344000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 72,
+      "pop": 59,
+      "team": "The O.C."
+    },
+    {
+      "name": "Akam",
+      "cost": 128000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 57,
+      "pop": 43,
+      "team": "Authors of Pain"
+    },
+    {
+      "name": "Akira Tozawa",
+      "cost": 211000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 77,
+      "pop": 50,
+      "team": null
+    },
+    {
+      "name": "Alba Fyre",
+      "cost": 237000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 81,
+      "pop": 53,
+      "team": "The Unholy Union"
+    },
+    {
+      "name": "Alexa Bliss",
+      "cost": 243000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 79,
+      "pop": 52,
+      "team": null
+    },
+    {
+      "name": "Andre Chase",
+      "cost": 188000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 75,
+      "pop": 45,
+      "team": "Chase U"
+    },
+    {
+      "name": "Andrade",
+      "cost": 184000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 83,
+      "pop": 48,
+      "team": null
+    },
+    {
+      "name": "Angel",
+      "cost": 236000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 69,
+      "pop": 54,
+      "team": "Legado Del Fantasma"
+    },
+    {
+      "name": "Apollo Crews",
+      "cost": 215000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 84,
+      "pop": 49,
+      "team": null
+    },
+    {
+      "name": "Ashante 'Thee' Adonis",
+      "cost": 232000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 72,
+      "pop": 57,
+      "team": "Hit Row"
+    },
+    {
+      "name": "Asuka",
+      "cost": 295000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 89,
+      "pop": 58,
+      "team": "Damage CTRL"
+    },
+    {
+      "name": "Austin Theory",
+      "cost": 192000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 58,
+      "pop": 51,
+      "team": "A-Town Down Under"
+    },
+    {
+      "name": "Axiom",
+      "cost": 202000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 57,
+      "pop": 49,
+      "team": null
+    },
+    {
+      "name": "B-Fab",
+      "cost": 202000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 59,
+      "pop": 48,
+      "team": "Hit Row"
+    },
+    {
+      "name": "Baron Corbin",
+      "cost": 167000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 89,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Bayley",
+      "cost": 281000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 65,
+      "pop": 58,
+      "team": "Damage CTRL"
+    },
+    {
+      "name": "Becky Lynch",
+      "cost": 348000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 86,
+      "pop": 61,
+      "team": null
+    },
+    {
+      "name": "Berto",
+      "cost": 173000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 70,
+      "pop": 48,
+      "team": "Legado Del Fantasma"
+    },
+    {
+      "name": "Bianca Belair",
+      "cost": 292000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 81,
+      "pop": 60,
+      "team": null
+    },
+    {
+      "name": "Blair Davenport",
+      "cost": 135000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 75,
+      "pop": 43,
+      "team": null
+    },
+    {
+      "name": "Braun Strowman",
+      "cost": 267000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Giant",
+      "sta": 75,
+      "pop": 58,
+      "team": null
+    },
+    {
+      "name": "Bron Breakker",
+      "cost": 238000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 64,
+      "pop": 58,
+      "team": null
+    },
+    {
+      "name": "Brooks Jensen",
+      "cost": 105000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 66,
+      "pop": 40,
+      "team": null
+    },
+    {
+      "name": "Brutus Creed",
+      "cost": 163000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 73,
+      "pop": 49,
+      "team": "Creed Brothers"
+    },
+    {
+      "name": "Candice LeRae",
+      "cost": 236000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 63,
+      "pop": 52,
+      "team": "The Way"
+    },
+    {
+      "name": "Carlito",
+      "cost": 266000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 90,
+      "pop": 56,
+      "team": "Latino World Order"
+    },
+    {
+      "name": "Carmella",
+      "cost": 224000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 81,
+      "pop": 51,
+      "team": null
+    },
+    {
+      "name": "Carmelo Hayes",
+      "cost": 161000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 64,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Cedric Alexander",
+      "cost": 228000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 63,
+      "pop": 54,
+      "team": null
+    },
+    {
+      "name": "Chad Gable",
+      "cost": 237000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 60,
+      "pop": 53,
+      "team": "Alpha Academy"
+    },
+    {
+      "name": "Channing 'Stacks' Lorenzo",
+      "cost": 223000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 67,
+      "pop": 58,
+      "team": "The D'Angelo Family"
+    },
+    {
+      "name": "Charlie Dempsey",
+      "cost": 101000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 57,
+      "pop": 41,
+      "team": null
+    },
+    {
+      "name": "Charlotte Flair",
+      "cost": 289000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Giant",
+      "sta": 65,
+      "pop": 60,
+      "team": null
+    },
+    {
+      "name": "Chelsea Green",
+      "cost": 232000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 68,
+      "pop": 52,
+      "team": null
+    },
+    {
+      "name": "CM Punk",
+      "cost": 402000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 56,
+      "pop": 64,
+      "team": null
+    },
+    {
+      "name": "Cody Rhodes",
+      "cost": 411000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 85,
+      "pop": 65,
+      "team": null
+    },
+    {
+      "name": "Cora Jade",
+      "cost": 138000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 75,
+      "pop": 45,
+      "team": null
+    },
+    {
+      "name": "Cruz Del Toro",
+      "cost": 187000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 63,
+      "pop": 48,
+      "team": "Latino World Order"
+    },
+    {
+      "name": "Dakota Kai",
+      "cost": 232000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 58,
+      "pop": 53,
+      "team": "Damage CTRL"
+    },
+    {
+      "name": "Damian Priest",
+      "cost": 267000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 61,
+      "pop": 59,
+      "team": "The Judgment Day"
+    },
+    {
+      "name": "Drew McIntyre",
+      "cost": 323000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 89,
+      "pop": 63,
+      "team": null
+    },
+    {
+      "name": "Duke Hudson",
+      "cost": 180000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 59,
+      "pop": 51,
+      "team": "Chase U"
+    },
+    {
+      "name": "Eddy Thorpe",
+      "cost": 88000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 81,
+      "pop": 40,
+      "team": null
+    },
+    {
+      "name": "Elektra Lopez",
+      "cost": 99000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 82,
+      "pop": 40,
+      "team": "Legado Del Fantasma"
+    },
+    {
+      "name": "Elton Prince",
+      "cost": 169000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 62,
+      "pop": 51,
+      "team": "Pretty Deadly"
+    },
+    {
+      "name": "Erik",
+      "cost": 192000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 55,
+      "pop": 49,
+      "team": "Viking Raiders"
+    },
+    {
+      "name": "Ethan Page",
+      "cost": 178000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 58,
+      "pop": 48,
+      "team": null
+    },
+    {
+      "name": "Fallon Henley",
+      "cost": 141000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 76,
+      "pop": 42,
+      "team": null
+    },
+    {
+      "name": "Finn Bálor",
+      "cost": 296000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 76,
+      "pop": 59,
+      "team": "The Judgment Day"
+    },
+    {
+      "name": "Gigi Dolin",
+      "cost": 150000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 83,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Giovanni Vinci",
+      "cost": 196000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 89,
+      "pop": 51,
+      "team": "Imperium"
+    },
+    {
+      "name": "Grayson Waller",
+      "cost": 143000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 69,
+      "pop": 45,
+      "team": "A-Town Down Under"
+    },
+    {
+      "name": "Gunther",
+      "cost": 315000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Giant",
+      "sta": 58,
+      "pop": 62,
+      "team": "Imperium"
+    },
+    {
+      "name": "Indi Hartwell",
+      "cost": 150000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 58,
+      "pop": 48,
+      "team": "The Way"
+    },
+    {
+      "name": "Isla Dawn",
+      "cost": 141000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 71,
+      "pop": 42,
+      "team": "The Unholy Union"
+    },
+    {
+      "name": "Ivar",
+      "cost": 179000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Giant",
+      "sta": 63,
+      "pop": 49,
+      "team": "Viking Raiders"
+    },
+    {
+      "name": "Ivy Nile",
+      "cost": 144000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 56,
+      "pop": 47,
+      "team": "Creed Brothers"
+    },
+    {
+      "name": "Iyo Sky",
+      "cost": 292000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 66,
+      "pop": 58,
+      "team": "Damage CTRL"
+    },
+    {
+      "name": "Jacob Fatu",
+      "cost": 218000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 67,
+      "pop": 52,
+      "team": "The Bloodline"
+    },
+    {
+      "name": "Jacy Jayne",
+      "cost": 143000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 56,
+      "pop": 46,
+      "team": null
+    },
+    {
+      "name": "Jade Cargill",
+      "cost": 238000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Giant",
+      "sta": 88,
+      "pop": 57,
+      "team": null
+    },
+    {
+      "name": "Jaida Parker",
+      "cost": 59000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 81,
+      "pop": 31,
+      "team": null
+    },
+    {
+      "name": "Jakara Jackson",
+      "cost": 77000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 90,
+      "pop": 37,
+      "team": null
+    },
+    {
+      "name": "JD McDonagh",
+      "cost": 250000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 87,
+      "pop": 53,
+      "team": "The Judgment Day"
+    },
+    {
+      "name": "Jevon Evans",
+      "cost": 70000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 82,
+      "pop": 35,
+      "team": null
+    },
+    {
+      "name": "Jey Uso",
+      "cost": 342000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 71,
+      "pop": 63,
+      "team": null
+    },
+    {
+      "name": "Jimmy Uso",
+      "cost": 307000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 58,
+      "pop": 59,
+      "team": "The Bloodline"
+    },
+    {
+      "name": "Joaquin Wilde",
+      "cost": 140000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 77,
+      "pop": 40,
+      "team": "Latino World Order"
+    },
+    {
+      "name": "Joe Coffey",
+      "cost": 185000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 76,
+      "pop": 49,
+      "team": "Gallus"
+    },
+    {
+      "name": "Johnny Gargano",
+      "cost": 232000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 65,
+      "pop": 50,
+      "team": "DIY"
+    },
+    {
+      "name": "Josh Briggs",
+      "cost": 142000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 55,
+      "pop": 44,
+      "team": null
+    },
+    {
+      "name": "Julius Creed",
+      "cost": 154000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 86,
+      "pop": 46,
+      "team": "Creed Brothers"
+    },
+    {
+      "name": "Kairi Sane",
+      "cost": 164000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 73,
+      "pop": 47,
+      "team": "Damage CTRL"
+    },
+    {
+      "name": "Karl Anderson",
+      "cost": 158000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 76,
+      "pop": 42,
+      "team": "The O.C."
+    },
+    {
+      "name": "Karrion Kross",
+      "cost": 284000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 87,
+      "pop": 53,
+      "team": "The Final Testament"
+    },
+    {
+      "name": "Katana Chance",
+      "cost": 146000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 81,
+      "pop": 45,
+      "team": null
+    },
+    {
+      "name": "Kayden Carter",
+      "cost": 139000,
+      "role": "Face",
+      "gender": "Female",
+      "class":
+      "Cruiser",
+      "sta": 60,
+      "pop": 44,
+      "team": null
+    },
+    {
+      "name": "Kelani Jordan",
+      "cost": 63000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 60,
+      "pop": 34,
+      "team": null
+    },
+    {
+      "name": "Kevin Owens",
+      "cost": 315000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 87,
+      "pop": 58,
+      "team": null
+    },
+    {
+      "name": "Kiana James",
+      "cost": 82000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 64,
+      "pop": 36,
+      "team": null
+    },
+    {
+      "name": "Kit Wilson",
+      "cost": 185000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 66,
+      "pop": 51,
+      "team": "Pretty Deadly"
+    },
+    {
+      "name": "Kofi Kingston",
+      "cost": 344000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 76,
+      "pop": 57,
+      "team": "The New Day"
+    },
+    {
+      "name": "LA Knight",
+      "cost": 322000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 62,
+      "pop": 59,
+      "team": null
+    },
+    {
+      "name": "Lash Legend",
+      "cost": 98000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 56,
+      "pop": 41,
+      "team": null
+    },
+    {
+      "name": "Lexis King",
+      "cost": 97000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 84,
+      "pop": 41,
+      "team": null
+    },
+    {
+      "name": "Liv Morgan",
+      "cost": 277000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 55,
+      "pop": 59,
+      "team": "The Judgment Day"
+    },
+    {
+      "name": "Logan Paul",
+      "cost": 202000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 56,
+      "pop": 51,
+      "team": null
+    },
+    {
+      "name": "Lola Vice",
+      "cost": 58000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 90,
+      "pop": 31,
+      "team": null
+    },
+    {
+      "name": "Ludwig Kaiser",
+      "cost": 218000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 65,
+      "pop": 52,
+      "team": "Imperium"
+    },
+    {
+      "name": "Luke Gallows",
+      "cost": 187000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 88,
+      "pop": 41,
+      "team": "The O.C."
+    },
+    {
+      "name": "Lyra Valkyria",
+      "cost": 167000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 73,
+      "pop": 46,
+      "team": null
+    },
+    {
+      "name": "Mark Coffey",
+      "cost": 153000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 78,
+      "pop": 47,
+      "team": "Gallus"
+    },
+    {
+      "name": "Maxxine Dupri",
+      "cost": 148000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 79,
+      "pop": 47,
+      "team": "Alpha Academy"
+    },
+    {
+      "name": "Michin",
+      "cost": 209000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 72,
+      "pop": 48,
+      "team": "The O.C."
+    },
+    {
+      "name": "Montez Ford",
+      "cost": 192000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 83,
+      "pop": 51,
+      "team": "Street Profits"
+    },
+    {
+      "name": "Naomi",
+      "cost": 264000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 58,
+      "pop": 54,
+      "team": null
+    },
+    {
+      "name": "Natalya",
+      "cost": 192000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 62,
+      "pop": 49,
+      "team": null
+    },
+    {
+      "name": "Nathan Frazer",
+      "cost": 143000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 71,
+      "pop": 46,
+      "team": null
+    },
+    {
+      "name": "Nia Jax",
+      "cost": 237000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Giant",
+      "sta": 67,
+      "pop": 55,
+      "team": null
+    },
+    {
+      "name": "Nikki Cross",
+      "cost": 151000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 82,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Noam Dar",
+      "cost": 155000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 55,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Oba Femi",
+      "cost": 87000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 79,
+      "pop": 39,
+      "team": null
+    },
+    {
+      "name": "Omos",
+      "cost": 208000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Giant",
+      "sta": 89,
+      "pop": 55,
+      "team": null
+    },
+    {
+      "name": "Oro Mensah",
+      "cost": 160000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 84,
+      "pop": 46,
+      "team": null
+    },
+    {
+      "name": "Otis",
+      "cost": 261000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 77,
+      "pop": 56,
+      "team": "Alpha Academy"
+    },
+    {
+      "name": "Pete Dunne",
+      "cost": 206000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 74,
+      "pop": 50,
+      "team": null
+    },
+    {
+      "name": "Piper Niven",
+      "cost": 215000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Giant",
+      "sta": 57,
+      "pop": 49,
+      "team": null
+    },
+    {
+      "name": "R-Truth",
+      "cost": 340000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 63,
+      "pop": 57,
+      "team": null
+    },
+    {
+      "name": "Randy Orton",
+      "cost": 353000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 73,
+      "pop": 61,
+      "team": null
+    },
+    {
+      "name": "Raquel Rodriguez",
+      "cost": 151000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Giant",
+      "sta": 67,
+      "pop": 48,
+      "team": null
+    },
+    {
+      "name": "Rezar",
+      "cost": 141000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 74,
+      "pop": 44,
+      "team": "Authors of Pain"
+    },
+    {
+      "name": "Ridge Holland",
+      "cost": 197000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 55,
+      "pop": 53,
+      "team": null
+    },
+    {
+      "name": "Roman Reigns",
+      "cost": 370000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 68,
+      "pop": 66,
+      "team": "The Bloodline"
+    },
+    {
+      "name": "Roxanne Perez",
+      "cost": 150000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 65,
+      "pop": 46,
+      "team": null
+    },
+    {
+      "name": "Sami Zayn",
+      "cost": 291000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 81,
+      "pop": 57,
+      "team": null
+    },
+    {
+      "name": "Santos Escobar",
+      "cost": 264000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 64,
+      "pop": 56,
+      "team": "Legado Del Fantasma"
+    },
+    {
+      "name": "Scarlett",
+      "cost": 183000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 80,
+      "pop": 43,
+      "team": "The Final Testament"
+    },
+    {
+      "name": "Seth 'Freakin' Rollins",
+      "cost": 342000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 70,
+      "pop": 62,
+      "team": null
+    },
+    {
+      "name": "Shawn Spears",
+      "cost": 232000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 55,
+      "pop": 51,
+      "team": null
+    },
+    {
+      "name": "Shayna Baszler",
+      "cost": 244000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 58,
+      "pop": 54,
+      "team": null
+    },
+    {
+      "name": "Sheamus",
+      "cost": 265000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 78,
+      "pop": 55,
+      "team": null
+    },
+    {
+      "name": "Shinsuke Nakamura",
+      "cost": 322000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 89,
+      "pop": 60,
+      "team": null
+    },
+    {
+      "name": "Shotzi",
+      "cost": 147000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 85,
+      "pop": 46,
+      "team": null
+    },
+    {
+      "name": "Sol Ruca",
+      "cost": 148000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 56,
+      "pop": 48,
+      "team": null
+    },
+    {
+      "name": "Solo Sikoa",
+      "cost": 188000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 73,
+      "pop": 51,
+      "team": "The Bloodline"
+    },
+    {
+      "name": "Tama Tonga",
+      "cost": 230000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 89,
+      "pop": 51,
+      "team": "The Bloodline"
+    },
+    {
+      "name": "Tatum Paxley",
+      "cost": 69000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 87,
+      "pop": 34,
+      "team": null
+    },
+    {
+      "name": "Tegan Nox",
+      "cost": 194000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 72,
+      "pop": 48,
+      "team": null
+    },
+    {
+      "name": "The Miz",
+      "cost": 297000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 84,
+      "pop": 56,
+      "team": null
+    },
+    {
+      "name": "Thea Hail",
+      "cost": 132000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 82,
+      "pop": 44,
+      "team": "Chase U"
+    },
+    {
+      "name": "Tiffany Stratton",
+      "cost": 218000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 60,
+      "pop": 55,
+      "team": null
+    },
+    {
+      "name": "Tommaso Ciampa",
+      "cost": 289000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 90,
+      "pop": 53,
+      "team": "DIY"
+    },
+    {
+      "name": "Tonga Loa",
+      "cost": 223000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 82,
+      "pop": 51,
+      "team": "The Bloodline"
+    },
+    {
+      "name": "Tony D'Angelo",
+      "cost": 124000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 70,
+      "pop": 43,
+      "team": "The D'Angelo Family"
+    },
+    {
+      "name": "Trick Williams",
+      "cost": 107000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Fighter",
+      "sta": 73,
+      "pop": 42,
+      "team": null
+    },
+    {
+      "name": "Tyler Bate",
+      "cost": 150000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Specialist",
+      "sta": 61,
+      "pop": 44,
+      "team": null
+    },
+    {
+      "name": "Valhalla",
+      "cost": 184000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Bruiser",
+      "sta": 59,
+      "pop": 48,
+      "team": "Viking Raiders"
+    },
+    {
+      "name": "Wendy Choo",
+      "cost": 174000,
+      "role": "Face",
+      "gender": "Female",
+      "class": "Fighter",
+      "sta": 66,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Wes Lee",
+      "cost": 186000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 68,
+      "pop": 47,
+      "team": null
+    },
+    {
+      "name": "Wolfgang",
+      "cost": 126000,
+      "role": "Heel",
+      "gender": "Male",
+      "class": "Bruiser",
+      "sta": 87,
+      "pop": 40,
+      "team": "Gallus"
+    },
+    {
+      "name": "Xavier Woods",
+      "cost": 143000,
+      "role": "Face",
+      "gender": "Male",
+      "class": "Cruiser",
+      "sta": 69,
+      "pop": 45,
+      "team": "The New Day"
+    },
+    {
+      "name": "Zelina Vega",
+      "cost": 282000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Cruiser",
+      "sta": 74,
+      "pop": 55,
+      "team": "Latino World Order"
+    },
+    {
+      "name": "Zoey Stark",
+      "cost": 167000,
+      "role": "Heel",
+      "gender": "Female",
+      "class": "Specialist",
+      "sta": 75,
+      "pop": 47,
+      "team": null
+    }
+  ]
+}
+
