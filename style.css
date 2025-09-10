@@ -7,48 +7,19 @@ header h1 { margin: 0; color: #ffffff; font-size: 1.5em; }
 .roster-pool { order: 2; }
 .drafted-roster { order: 1; background-color: #252525; padding: 15px; border-radius: 8px; }
 
-/* --- START: New Header & Column Switcher Styles --- */
-.pool-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-.pool-header h2 {
-    margin: 0;
-}
-.column-switcher {
-    display: flex;
-    border: 1px solid #555;
-    border-radius: 5px;
-    overflow: hidden;
-}
-.column-switcher button {
-    background-color: #333;
-    color: #f0f0f0;
-    border: none;
-    padding: 6px 12px;
-    cursor: pointer;
-    border-left: 1px solid #555;
-}
-.column-switcher button:first-child {
-    border-left: none;
-}
-.column-switcher button.active {
-    background-color: #007BFF;
-    color: white;
-}
-/* --- END: New Styles --- */
+/* Header & Column Switcher Styles */
+.pool-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.pool-header h2 { margin: 0; }
+.column-switcher { display: flex; border: 1px solid #555; border-radius: 5px; overflow: hidden; }
+.column-switcher button { background-color: #333; color: #f0f0f0; border: none; padding: 6px 12px; cursor: pointer; border-left: 1px solid #555; }
+.column-switcher button:first-child { border-left: none; }
+.column-switcher button.active { background-color: #007BFF; color: white; }
 
-/* --- START: Updated Grid Styles --- */
-.superstar-grid {
-    display: grid;
-    gap: 10px;
-}
+/* Grid Styles */
+.superstar-grid { display: grid; gap: 10px; }
 .superstar-grid.grid-cols-1 { grid-template-columns: 1fr; }
 .superstar-grid.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
 .superstar-grid.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-/* --- END: Updated Grid Styles --- */
 
 /* Superstar Card Styles */
 .superstar-card { background-color: #333; border: 1px solid #555; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
@@ -98,7 +69,7 @@ header h1 { margin: 0; color: #ffffff; font-size: 1.5em; }
 .heel-count { background-color: #D32F2F; }
 #synergy-list { list-style: none; padding: 0; color: #FFC107; }
 
-/* Media Query for Wider Screens */
+/* --- CORRECTED Media Query for Wider Screens --- */
 @media (min-width: 1024px) {
     body { padding: 20px; }
     header h1 { font-size: 2em; }
@@ -108,7 +79,18 @@ header h1 { margin: 0; color: #ffffff; font-size: 1.5em; }
     .superstar-card-image { height: 160px; }
     .filter-row { flex-direction: row; gap: 10px; }
     .filter-actions { flex-direction: row; }
-    /* On desktop, we can default to a wider grid */
-    .superstar-grid.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+    
+    /* 
+     * THIS IS THE FIX:
+     * Instead of a specific rule for grid-cols-3, we just make the grid wider in general.
+     * The JavaScript-applied classes (grid-cols-1, 2, 3) will now work correctly
+     * on both mobile AND desktop without conflicting rules.
+    */
+    .superstar-grid.grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .superstar-grid.grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
