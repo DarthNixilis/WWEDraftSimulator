@@ -18,54 +18,62 @@
     <div class="main-container">
         <div class="roster-pool">
             <h2>Available Superstars</h2>
+            <!-- START: Updated Filters Section -->
             <div class="filters">
                 <input type="text" id="name-filter" placeholder="Search by name...">
-                <select id="class-filter">
-                    <option value="all">All Classes</option>
-                </select>
                 <select id="gender-filter">
                     <option value="all">All Genders</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
+                <select id="sort-filter">
+                    <option value="cost-desc">Sort by Cost: High to Low</option>
+                    <option value="cost-asc">Sort by Cost: Low to High</option>
+                    <option value="name-asc">Sort by Name: A-Z</option>
+                    <option value="name-desc">Sort by Name: Z-A</option>
+                    <option value="pop-desc">Sort by Popularity: High to Low</option>
+                    <option value="sta-desc">Sort by Stamina: High to Low</option>
+                </select>
             </div>
+            <!-- END: Updated Filters Section -->
             <div id="superstar-list" class="superstar-grid">
                 <!-- Superstars will be loaded here by JavaScript -->
             </div>
         </div>
 
         <div class="drafted-roster">
-            <h2>Your Roster</h2>
+            <h2>Your Roster (<span id="total-drafted-count">0</span>)</h2>
             <ul id="drafted-list">
                 <!-- Drafted superstars will appear here -->
             </ul>
 
-            <!-- START: New Roster Breakdown Section -->
+            <!-- START: New Granular Roster Breakdown -->
             <div id="roster-breakdown" class="roster-breakdown">
                 <h3>Roster Breakdown</h3>
-                <div id="breakdown-counters">
-                    <!-- Gender Group -->
-                    <div class="breakdown-group">
-                        <div class="breakdown-item"><span>Male</span><span id="male-count">0</span></div>
-                        <div class="breakdown-item"><span>Female</span><span id="female-count">0</span></div>
-                    </div>
-                    <!-- Role Group -->
-                    <div class="breakdown-group">
-                        <div class="breakdown-item"><span>Face</span><span id="face-count">0</span></div>
-                        <div class="breakdown-item"><span>Heel</span><span id="heel-count">0</span></div>
-                    </div>
-                    <!-- Class Group -->
-                    <div class="breakdown-group-classes">
-                        <h4>Classes</h4>
-                        <div class="breakdown-item"><span>Fighter</span><span id="fighter-count">0</span></div>
-                        <div class="breakdown-item"><span>Bruiser</span><span id="bruiser-count">0</span></div>
-                        <div class="breakdown-item"><span>Cruiser</span><span id="cruiser-count">0</span></div>
-                        <div class="breakdown-item"><span>Giant</span><span id="giant-count">0</span></div>
-                        <div class="breakdown-item"><span>Specialist</span><span id="specialist-count">0</span></div>
-                    </div>
+                <!-- Male Division -->
+                <div class="division-tracker">
+                    <h4>Male Division (<span id="male-count">0</span>)</h4>
+                    <div class="breakdown-item"><span>Face</span><span id="male-face-count">0</span></div>
+                    <div class="breakdown-item"><span>Heel</span><span id="male-heel-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Fighter</span><span id="male-fighter-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Bruiser</span><span id="male-bruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Cruiser</span><span id="male-cruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Giant</span><span id="male-giant-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Specialist</span><span id="male-specialist-count">0</span></div>
+                </div>
+                <!-- Female Division -->
+                <div class="division-tracker">
+                    <h4>Female Division (<span id="female-count">0</span>)</h4>
+                    <div class="breakdown-item"><span>Face</span><span id="female-face-count">0</span></div>
+                    <div class="breakdown-item"><span>Heel</span><span id="female-heel-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Fighter</span><span id="female-fighter-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Bruiser</span><span id="female-bruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Cruiser</span><span id="female-cruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Giant</span><span id="female-giant-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Specialist</span><span id="female-specialist-count">0</span></div>
                 </div>
             </div>
-            <!-- END: New Roster Breakdown Section -->
+            <!-- END: New Granular Roster Breakdown -->
 
             <div id="synergy-bonus" class="synergy-bonus">
                 <h3>Synergy Bonuses</h3>

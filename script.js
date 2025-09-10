@@ -1,44 +1,75 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Existing element selectors ---
+    // --- Element Selectors ---
     const superstarListContainer = document.getElementById('superstar-list');
     const budgetDisplay = document.getElementById('budget-display');
     const draftedListContainer = document.getElementById('drafted-list');
     const synergyListContainer = document.getElementById('synergy-list');
     const nameFilter = document.getElementById('name-filter');
-    const classFilter = document.getElementById('class-filter');
     const genderFilter = document.getElementById('gender-filter');
+    const sortFilter = document.getElementById('sort-filter'); // New sort dropdown
+    const totalDraftedCount = document.getElementById('total-drafted-count');
 
-    // --- New element selectors for the counters ---
-    const maleCount = document.getElementById('male-count');
-    const femaleCount = document.getElementById('female-count');
-    const faceCount = document.getElementById('face-count');
-    const heelCount = document.getElementById('heel-count');
-    const fighterCount = document.getElementById('fighter-count');
-    const bruiserCount = document.getElementById('bruiser-count');
-    const cruiserCount = document.getElementById('cruiser-count');
-    const giantCount = document.getElementById('giant-count');
-    const specialistCount = document.getElementById('specialist-count');
-
+    // --- State Variables ---
     let budget = 4000000;
     let allSuperstars = [];
     let draftedRoster = [];
 
+    // --- Fetch initial data ---
     fetch('roster.json')
         .then(response => response.json())
         .then(data => {
             allSuperstars = data.superstars;
-            populateClassFilter(allSuperstars);
-            displaySuperstars(allSuperstars);
+            applyFiltersAndSort(); // Initial display
         });
 
-    function populateClassFilter(superstars) {
-        const classes = [...new Set(superstars.map(s => s.class))];
-        classes.sort().forEach(className => {
-            const option = document.createElement('option');
-            option.value = className;
-            option.textContent = className;
-            classFilter.appendChild(option);
-        });
+    // --- Event Listeners ---
+    superstarListContainer.addEventListener('click', handleDraftClick);
+    nameFilter.addEventListener('keyup', applyFiltersAndSort);
+    genderFilter.addEventListener('change', applyFiltersAndSort);
+    sortFilter.addEventListener('change', applyFiltersAndSort);
+
+    // --- Core Functions ---
+
+    function handleDraftClick(e) {
+        if (e.target.classList.contains('draft-button')) {
+            const superstarName = e.target.dataset.name;
+            const superstar = allSuperstars.find(s => s.name === superstarName);
+            
+            if (superstar && budget >= superstar.cost) {
+                budget -= superstar.cost;
+                draftedRoster.push(superstar);
+                updateAllDisplays();
+            }
+        }
+    }
+
+    function applyFiltersAndSort() {
+        let processedSuperstars = [...allSuperstars];
+
+        // 1. Filtering
+        const nameQuery = nameFilter.value.toLowerCase();
+        const genderQuery = genderFilter.value;
+
+        if (nameQuery) {
+            processedSuperstars = processedSuperstars.filter(s => s.name.toLowerCase().includes(nameQuery));
+        }
+        if (genderQuery !== 'all') {
+            processedSuperstars = processedSuperstars.filter(s => s.gender === genderQuery);
+        }
+
+        // 2. Sorting
+        const sortValue = sortFilter.value;
+        switch (sortValue) {
+            case 'cost-desc': processedSuperstars.sort((a, b) => b.cost - a.cost); break;
+            case 'cost-asc':  processedSuperstars.sort((a, b) => a.cost - b.cost); break;
+            case 'name-asc':  processedSuperstars.sort((a, b) => a.name.localeCompare(b.name)); break;
+            case 'name-desc': processedSuperstars.sort((a, b) => b.name.localeCompare(a.name)); break;
+            case 'pop-desc':  processedSuperstars.sort((a, b) => b.pop - a.pop); break;
+            case 'sta-desc':  processedSuperstars.sort((a, b) => b.sta - a.sta); break;
+        }
+        
+        // 3. Display
+        displaySuperstars(processedSuperstars);
     }
 
     function displaySuperstars(superstars) {
@@ -46,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         superstars.forEach(superstar => {
             const card = document.createElement('div');
             card.className = `superstar-card ${superstar.role}`;
-            
             card.innerHTML = `
                 <h3>${superstar.name}</h3>
                 <div class="stats">
@@ -63,27 +93,22 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDraftButtons();
     }
 
-    superstarListContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('draft-button')) {
-            const superstarName = e.target.dataset.name;
-            const superstar = allSuperstars.find(s => s.name === superstarName);
-            
-            if (superstar && budget >= superstar.cost) {
-                budget -= superstar.cost;
-                draftedRoster.push(superstar);
-                
-                updateAllDisplays();
-            }
-        }
-    });
-
-    // --- New function to update all displays at once ---
     function updateAllDisplays() {
         updateBudget();
         updateDraftedRoster();
         updateDraftButtons();
-        updateBreakdownCounters(); // This is new
+        updateBreakdownCounters();
         checkSynergy();
+    }
+
+    function updateDraftedRoster() {
+        draftedListContainer.innerHTML = '';
+        draftedRoster.forEach(superstar => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${superstar.name} - $${superstar.cost.toLocaleString()}`;
+            draftedListContainer.appendChild(listItem);
+        });
+        totalDraftedCount.textContent = draftedRoster.length;
     }
 
     function updateBudget() {
@@ -101,50 +126,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function updateDraftedRoster() {
-        draftedListContainer.innerHTML = '';
-        draftedRoster.forEach(superstar => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${superstar.name} - $${superstar.cost.toLocaleString()}`;
-            draftedListContainer.appendChild(listItem);
-        });
-    }
-
-    // --- New function to calculate and display the breakdown ---
     function updateBreakdownCounters() {
         const counts = {
-            Male: 0, Female: 0,
-            Face: 0, Heel: 0,
-            Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0
+            male: { total: 0, Face: 0, Heel: 0, Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0 },
+            female: { total: 0, Face: 0, Heel: 0, Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0 }
         };
 
         draftedRoster.forEach(s => {
-            counts[s.gender]++;
-            counts[s.role]++;
-            counts[s.class]++;
+            const division = s.gender.toLowerCase(); // 'male' or 'female'
+            counts[division].total++;
+            counts[division][s.role]++;
+            counts[division][s.class]++;
         });
 
-        maleCount.textContent = counts.Male;
-        femaleCount.textContent = counts.Female;
-        faceCount.textContent = counts.Face;
-        heelCount.textContent = counts.Heel;
-        fighterCount.textContent = counts.Fighter;
-        bruiserCount.textContent = counts.Bruiser;
-        cruiserCount.textContent = counts.Cruiser;
-        giantCount.textContent = counts.Giant;
-        specialistCount.textContent = counts.Specialist;
+        // Update Male Division trackers
+        document.getElementById('male-count').textContent = counts.male.total;
+        document.getElementById('male-face-count').textContent = counts.male.Face;
+        document.getElementById('male-heel-count').textContent = counts.male.Heel;
+        document.getElementById('male-fighter-count').textContent = counts.male.Fighter;
+        document.getElementById('male-bruiser-count').textContent = counts.male.Bruiser;
+        document.getElementById('male-cruiser-count').textContent = counts.male.Cruiser;
+        document.getElementById('male-giant-count').textContent = counts.male.Giant;
+        document.getElementById('male-specialist-count').textContent = counts.male.Specialist;
+
+        // Update Female Division trackers
+        document.getElementById('female-count').textContent = counts.female.total;
+        document.getElementById('female-face-count').textContent = counts.female.Face;
+        document.getElementById('female-heel-count').textContent = counts.female.Heel;
+        document.getElementById('female-fighter-count').textContent = counts.female.Fighter;
+        document.getElementById('female-bruiser-count').textContent = counts.female.Bruiser;
+        document.getElementById('female-cruiser-count').textContent = counts.female.Cruiser;
+        document.getElementById('female-giant-count').textContent = counts.female.Giant;
+        document.getElementById('female-specialist-count').textContent = counts.female.Specialist;
     }
 
     function checkSynergy() {
         synergyListContainer.innerHTML = '';
         const teamCounts = {};
-        
         draftedRoster.forEach(superstar => {
             if (superstar.team) {
                 teamCounts[superstar.team] = (teamCounts[superstar.team] || 0) + 1;
             }
         });
-
         for (const team in teamCounts) {
             if (teamCounts[team] > 1) {
                 const listItem = document.createElement('li');
@@ -153,27 +176,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-
-    function applyFilters() {
-        let filteredSuperstars = [...allSuperstars];
-        const nameQuery = nameFilter.value.toLowerCase();
-        const classQuery = classFilter.value;
-        const genderQuery = genderFilter.value;
-
-        if (nameQuery) {
-            filteredSuperstars = filteredSuperstars.filter(s => s.name.toLowerCase().includes(nameQuery));
-        }
-        if (classQuery !== 'all') {
-            filteredSuperstars = filteredSuperstars.filter(s => s.class === classQuery);
-        }
-        if (genderQuery !== 'all') {
-            filteredSuperstars = filteredSuperstars.filter(s => s.gender === genderQuery);
-        }
-        displaySuperstars(filteredSuperstars);
-    }
-
-    nameFilter.addEventListener('keyup', applyFilters);
-    classFilter.addEventListener('change', applyFilters);
-    genderFilter.addEventListener('change', applyFilters);
 });
 
