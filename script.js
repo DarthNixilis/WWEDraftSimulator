@@ -27,15 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             allSuperstars = data.superstars;
-            addFilterRow(); // *** FIX: Add the first filter row on page load ***
-            applyFilters(); 
+            resetFilters(); // Start with a clean slate and one filter row
         });
 
     // --- Event Listeners ---
     superstarListContainer.addEventListener('click', handleDraftClick);
     addFilterBtn.addEventListener('click', addFilterRow);
     resetFiltersBtn.addEventListener('click', resetFilters);
-    // *** FIX: Correctly listen for changes on the container to handle dynamic elements ***
     dynamicFilterContainer.addEventListener('change', (event) => {
         const target = event.target;
         if (target.classList.contains('filter-type')) {
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         applyFilters();
     });
-
 
     // --- Core Functions ---
 
@@ -76,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const valueSelect = filterRow.querySelector('.filter-value');
         const selectedType = typeSelectElement.value;
 
-        valueSelect.innerHTML = ''; // Clear previous options
+        valueSelect.innerHTML = '';
         if (selectedType) {
             const values = [...new Set(allSuperstars.map(s => s[selectedType]).filter(Boolean))];
             values.sort();
@@ -92,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetFilters() {
         dynamicFilterContainer.innerHTML = '';
-        addFilterRow(); // Add back the initial empty filter
+        addFilterRow();
         updateAddFilterButtonState();
         applyFilters();
     }
@@ -157,7 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         checkSynergy();
     }
 
-    // --- All other update functions (updateBudget, updateDraftedRoster, etc.) remain the same ---
     function updateDraftedRoster() {
         draftedListContainer.innerHTML = '';
         draftedRoster.forEach(superstar => {

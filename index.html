@@ -18,24 +18,15 @@
     <div class="main-container">
         <div class="roster-pool">
             <h2>Available Superstars</h2>
-            <!-- START: Updated Filters Section -->
-            <div class="filters">
-                <input type="text" id="name-filter" placeholder="Search by name...">
-                <select id="gender-filter">
-                    <option value="all">All Genders</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <select id="sort-filter">
-                    <option value="cost-desc">Sort by Cost: High to Low</option>
-                    <option value="cost-asc">Sort by Cost: Low to High</option>
-                    <option value="name-asc">Sort by Name: A-Z</option>
-                    <option value="name-desc">Sort by Name: Z-A</option>
-                    <option value="pop-desc">Sort by Popularity: High to Low</option>
-                    <option value="sta-desc">Sort by Stamina: High to Low</option>
-                </select>
+            <div class="filter-controls">
+                <div id="dynamic-filter-container">
+                    <!-- Filter dropdowns will be dynamically added here -->
+                </div>
+                <div class="filter-actions">
+                    <button id="add-filter-btn">Add Filter</button>
+                    <button id="reset-filters-btn">Reset All Filters</button>
+                </div>
             </div>
-            <!-- END: Updated Filters Section -->
             <div id="superstar-list" class="superstar-grid">
                 <!-- Superstars will be loaded here by JavaScript -->
             </div>
@@ -43,14 +34,10 @@
 
         <div class="drafted-roster">
             <h2>Your Roster (<span id="total-drafted-count">0</span>)</h2>
-            <ul id="drafted-list">
-                <!-- Drafted superstars will appear here -->
-            </ul>
+            <ul id="drafted-list"></ul>
 
-            <!-- START: New Granular Roster Breakdown -->
             <div id="roster-breakdown" class="roster-breakdown">
                 <h3>Roster Breakdown</h3>
-                <!-- Male Division -->
                 <div class="division-tracker">
                     <h4>Male Division (<span id="male-count">0</span>)</h4>
                     <div class="breakdown-item"><span>Face</span><span id="male-face-count">0</span></div>
@@ -61,7 +48,6 @@
                     <div class="breakdown-item sub-item"><span>Giant</span><span id="male-giant-count">0</span></div>
                     <div class="breakdown-item sub-item"><span>Specialist</span><span id="male-specialist-count">0</span></div>
                 </div>
-                <!-- Female Division -->
                 <div class="division-tracker">
                     <h4>Female Division (<span id="female-count">0</span>)</h4>
                     <div class="breakdown-item"><span>Face</span><span id="female-face-count">0</span></div>
@@ -73,13 +59,10 @@
                     <div class="breakdown-item sub-item"><span>Specialist</span><span id="female-specialist-count">0</span></div>
                 </div>
             </div>
-            <!-- END: New Granular Roster Breakdown -->
 
             <div id="synergy-bonus" class="synergy-bonus">
                 <h3>Synergy Bonuses</h3>
-                <ul id="synergy-list">
-                    <!-- Synergy bonuses will be listed here -->
-                </ul>
+                <ul id="synergy-list"></ul>
             </div>
         </div>
     </div>
