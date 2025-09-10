@@ -26,7 +26,7 @@
                     <button id="add-filter-btn">Add Filter</button>
                     <button id="reset-filters-btn">Reset All Filters</button>
                     
-                    <!-- THIS IS THE SORTER THAT WAS MISSING -->
+                    <!-- Sorter Dropdown -->
                     <select id="sort-filter">
                         <option value="cost-desc">Sort by Cost: High to Low</option>
                         <option value="cost-asc">Sort by Cost: Low to High</option>
@@ -59,9 +59,31 @@
                 <!-- Drafted superstars will appear here -->
             </ul>
 
+            <!-- START: CORRECTED ROSTER BREAKDOWN SECTION -->
             <div id="roster-breakdown" class="roster-breakdown">
-                <!-- Roster breakdown will be generated here by script.js -->
+                <h3>Roster Breakdown</h3>
+                <div class="division-tracker">
+                    <h4>Male Division (<span id="male-count">0</span>)</h4>
+                    <div class="breakdown-item"><span>Face</span><span id="male-face-count">0</span></div>
+                    <div class="breakdown-item"><span>Heel</span><span id="male-heel-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Fighter</span><span id="male-fighter-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Bruiser</span><span id="male-bruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Cruiser</span><span id="male-cruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Giant</span><span id="male-giant-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Specialist</span><span id="male-specialist-count">0</span></div>
+                </div>
+                <div class="division-tracker">
+                    <h4>Female Division (<span id="female-count">0</span>)</h4>
+                    <div class="breakdown-item"><span>Face</span><span id="female-face-count">0</span></div>
+                    <div class="breakdown-item"><span>Heel</span><span id="female-heel-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Fighter</span><span id="female-fighter-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Bruiser</span><span id="female-bruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Cruiser</span><span id="female-cruiser-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Giant</span><span id="female-giant-count">0</span></div>
+                    <div class="breakdown-item sub-item"><span>Specialist</span><span id="female-specialist-count">0</span></div>
+                </div>
             </div>
+            <!-- END: CORRECTED ROSTER BREAKDOWN SECTION -->
 
             <div id="synergy-bonus" class="synergy-bonus">
                 <!-- Synergy bonuses will be generated here by script.js -->
