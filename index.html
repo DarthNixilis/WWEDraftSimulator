@@ -22,7 +22,6 @@
                 <input type="text" id="name-filter" placeholder="Search by name...">
                 <select id="class-filter">
                     <option value="all">All Classes</option>
-                    <!-- Options will be populated by JavaScript -->
                 </select>
                 <select id="gender-filter">
                     <option value="all">All Genders</option>
@@ -40,6 +39,34 @@
             <ul id="drafted-list">
                 <!-- Drafted superstars will appear here -->
             </ul>
+
+            <!-- START: New Roster Breakdown Section -->
+            <div id="roster-breakdown" class="roster-breakdown">
+                <h3>Roster Breakdown</h3>
+                <div id="breakdown-counters">
+                    <!-- Gender Group -->
+                    <div class="breakdown-group">
+                        <div class="breakdown-item"><span>Male</span><span id="male-count">0</span></div>
+                        <div class="breakdown-item"><span>Female</span><span id="female-count">0</span></div>
+                    </div>
+                    <!-- Role Group -->
+                    <div class="breakdown-group">
+                        <div class="breakdown-item"><span>Face</span><span id="face-count">0</span></div>
+                        <div class="breakdown-item"><span>Heel</span><span id="heel-count">0</span></div>
+                    </div>
+                    <!-- Class Group -->
+                    <div class="breakdown-group-classes">
+                        <h4>Classes</h4>
+                        <div class="breakdown-item"><span>Fighter</span><span id="fighter-count">0</span></div>
+                        <div class="breakdown-item"><span>Bruiser</span><span id="bruiser-count">0</span></div>
+                        <div class="breakdown-item"><span>Cruiser</span><span id="cruiser-count">0</span></div>
+                        <div class="breakdown-item"><span>Giant</span><span id="giant-count">0</span></div>
+                        <div class="breakdown-item"><span>Specialist</span><span id="specialist-count">0</span></div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: New Roster Breakdown Section -->
+
             <div id="synergy-bonus" class="synergy-bonus">
                 <h3>Synergy Bonuses</h3>
                 <ul id="synergy-list">
@@ -52,3 +79,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

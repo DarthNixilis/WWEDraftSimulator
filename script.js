@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Existing element selectors ---
     const superstarListContainer = document.getElementById('superstar-list');
     const budgetDisplay = document.getElementById('budget-display');
     const draftedListContainer = document.getElementById('drafted-list');
@@ -7,11 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const classFilter = document.getElementById('class-filter');
     const genderFilter = document.getElementById('gender-filter');
 
+    // --- New element selectors for the counters ---
+    const maleCount = document.getElementById('male-count');
+    const femaleCount = document.getElementById('female-count');
+    const faceCount = document.getElementById('face-count');
+    const heelCount = document.getElementById('heel-count');
+    const fighterCount = document.getElementById('fighter-count');
+    const bruiserCount = document.getElementById('bruiser-count');
+    const cruiserCount = document.getElementById('cruiser-count');
+    const giantCount = document.getElementById('giant-count');
+    const specialistCount = document.getElementById('specialist-count');
+
     let budget = 4000000;
     let allSuperstars = [];
     let draftedRoster = [];
 
-    // Fetch data from the JSON file
     fetch('roster.json')
         .then(response => response.json())
         .then(data => {
@@ -31,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displaySuperstars(superstars) {
-        superstarListContainer.innerHTML = ''; // Clear existing list
+        superstarListContainer.innerHTML = '';
         superstars.forEach(superstar => {
             const card = document.createElement('div');
             card.className = `superstar-card ${superstar.role}`;
@@ -52,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDraftButtons();
     }
 
-    // Event listener for drafting a superstar
     superstarListContainer.addEventListener('click', (e) => {
         if (e.target.classList.contains('draft-button')) {
             const superstarName = e.target.dataset.name;
@@ -62,21 +72,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 budget -= superstar.cost;
                 draftedRoster.push(superstar);
                 
-                updateBudget();
-                updateDraftedRoster();
-                updateDraftButtons();
-                checkSynergy();
+                updateAllDisplays();
             }
         }
     });
 
+    // --- New function to update all displays at once ---
+    function updateAllDisplays() {
+        updateBudget();
+        updateDraftedRoster();
+        updateDraftButtons();
+        updateBreakdownCounters(); // This is new
+        checkSynergy();
+    }
+
     function updateBudget() {
         budgetDisplay.textContent = `$${budget.toLocaleString()}`;
-        if (budget < 0) {
-            budgetDisplay.style.color = '#D32F2F'; // Red if over budget
-        } else {
-            budgetDisplay.style.color = '#4CAF50'; // Green if within budget
-        }
+        budgetDisplay.style.color = budget < 0 ? '#D32F2F' : '#4CAF50';
     }
 
     function updateDraftButtons() {
@@ -85,12 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const superstarName = button.dataset.name;
             const superstar = allSuperstars.find(s => s.name === superstarName);
             const isDrafted = draftedRoster.some(s => s.name === superstarName);
-
-            if (isDrafted || superstar.cost > budget) {
-                button.disabled = true;
-            } else {
-                button.disabled = false;
-            }
+            button.disabled = isDrafted || superstar.cost > budget;
         });
     }
 
@@ -101,6 +108,31 @@ document.addEventListener('DOMContentLoaded', () => {
             listItem.textContent = `${superstar.name} - $${superstar.cost.toLocaleString()}`;
             draftedListContainer.appendChild(listItem);
         });
+    }
+
+    // --- New function to calculate and display the breakdown ---
+    function updateBreakdownCounters() {
+        const counts = {
+            Male: 0, Female: 0,
+            Face: 0, Heel: 0,
+            Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0
+        };
+
+        draftedRoster.forEach(s => {
+            counts[s.gender]++;
+            counts[s.role]++;
+            counts[s.class]++;
+        });
+
+        maleCount.textContent = counts.Male;
+        femaleCount.textContent = counts.Female;
+        faceCount.textContent = counts.Face;
+        heelCount.textContent = counts.Heel;
+        fighterCount.textContent = counts.Fighter;
+        bruiserCount.textContent = counts.Bruiser;
+        cruiserCount.textContent = counts.Cruiser;
+        giantCount.textContent = counts.Giant;
+        specialistCount.textContent = counts.Specialist;
     }
 
     function checkSynergy() {
@@ -122,28 +154,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Filter functionality
     function applyFilters() {
         let filteredSuperstars = [...allSuperstars];
-
-        // Name filter
         const nameQuery = nameFilter.value.toLowerCase();
+        const classQuery = classFilter.value;
+        const genderQuery = genderFilter.value;
+
         if (nameQuery) {
             filteredSuperstars = filteredSuperstars.filter(s => s.name.toLowerCase().includes(nameQuery));
         }
-
-        // Class filter
-        const classQuery = classFilter.value;
         if (classQuery !== 'all') {
             filteredSuperstars = filteredSuperstars.filter(s => s.class === classQuery);
         }
-
-        // Gender filter
-        const genderQuery = genderFilter.value;
         if (genderQuery !== 'all') {
             filteredSuperstars = filteredSuperstars.filter(s => s.gender === genderQuery);
         }
-
         displaySuperstars(filteredSuperstars);
     }
 
@@ -151,3 +176,4 @@ document.addEventListener('DOMContentLoaded', () => {
     classFilter.addEventListener('change', applyFilters);
     genderFilter.addEventListener('change', applyFilters);
 });
+
