@@ -6,24 +6,32 @@ header h1 { margin: 0; color: #ffffff; }
 .main-container { display: flex; gap: 20px; }
 .roster-pool { flex: 3; }
 .drafted-roster { flex: 1; background-color: #252525; padding: 15px; border-radius: 8px; height: fit-content; }
-.superstar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
-.superstar-card { background-color: #333; border: 1px solid #555; border-radius: 8px; padding: 15px; display: flex; flex-direction: column; }
+.superstar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+
+/* Superstar Card Styles */
+.superstar-card { background-color: #333; border: 1px solid #555; border-radius: 8px; display: flex; flex-direction: column; overflow: hidden; }
 .superstar-card.Heel { border-left: 5px solid #D32F2F; }
 .superstar-card.Face { border-left: 5px solid #388E3C; }
-.superstar-card h3 { margin: 0 0 10px; font-size: 1.2em; }
-.stats { margin-bottom: 15px; }
-.stats p { margin: 4px 0; font-size: 0.9em; }
-.draft-button { margin-top: auto; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s; }
+.superstar-card-image { width: 100%; height: 160px; object-fit: cover; background-color: #222; }
+.superstar-card-content { padding: 10px; display: flex; flex-direction: column; flex-grow: 1; }
+.superstar-card h3 { margin: 0 0 10px; font-size: 1.1em; }
+.stats { margin-bottom: 10px; font-size: 0.85em; }
+.stats p { margin: 4px 0; }
+.draft-button { margin-top: auto; padding: 8px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em; transition: background-color 0.2s; }
 .draft-button:hover { background-color: #0056b3; }
 .draft-button:disabled { background-color: #555; cursor: not-allowed; }
-#drafted-list { list-style: none; padding: 0; margin-top: 15px; }
-#drafted-list li { background-color: #3c3c3c; padding: 8px; margin-bottom: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
 
-/* Dynamic Filter Styles */
+/* Drafted List Styles */
+#drafted-list { list-style: none; padding: 0; margin-top: 15px; }
+#drafted-list li { background-color: #3c3c3c; padding: 8px 12px; margin-bottom: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; }
+.remove-superstar-btn { background: none; border: none; color: #ff4d4d; font-size: 1.2em; font-weight: bold; cursor: pointer; padding: 0 5px; }
+.remove-superstar-btn:hover { color: #ff8080; }
+
+/* Filter & Action Styles */
 .filter-controls { background-color: #2c2c2c; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #444; }
 #dynamic-filter-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
 .filter-row { display: flex; gap: 10px; align-items: center; }
-.filter-row select { padding: 8px; border-radius: 5px; border: 1px solid #555; background-color: #333; color: #f0f0f0; }
+.filter-row select, #sort-filter { padding: 8px; border-radius: 5px; border: 1px solid #555; background-color: #333; color: #f0f0f0; }
 .filter-row .filter-type { flex-basis: 150px; }
 .filter-row .filter-value { flex-grow: 1; }
 .filter-actions { display: flex; gap: 10px; padding-top: 10px; border-top: 1px solid #444; }
@@ -33,28 +41,26 @@ header h1 { margin: 0; color: #ffffff; }
 #add-filter-btn:disabled { background-color: #555; cursor: not-allowed; }
 #reset-filters-btn { background-color: #6c757d; color: white; }
 #reset-filters-btn:hover { background-color: #5a6268; }
-
-/* --- NEW & UPDATED STYLES --- */
 .roster-actions { display: flex; gap: 10px; margin-bottom: 10px; }
 .roster-actions button { flex-grow: 1; padding: 10px; font-size: 1em; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
 #toggle-export-btn { background-color: #FFC107; color: #1a1a1a; }
 #toggle-export-btn:hover { background-color: #d4a106; }
 #reset-roster-btn { background-color: #D32F2F; color: white; }
 #reset-roster-btn:hover { background-color: #a02424; }
-
 .export-options { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; }
 .export-options.hidden { display: none; }
 .export-options button { background-color: #495057; color: white; text-align: left; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; }
 .export-options button:hover { background-color: #5a6268; }
 
-/* Roster Breakdown Styles */
-.roster-breakdown { margin-top: 20px; padding-top: 10px; border-top: 1px solid #444; }
+/* Granular Roster Breakdown Styles */
+.roster-breakdown, .synergy-bonus { margin-top: 20px; padding-top: 10px; border-top: 1px solid #444; }
 .division-tracker { background-color: #2c2c2c; border: 1px solid #444; border-radius: 6px; padding: 10px; margin-bottom: 15px; }
 .division-tracker h4 { margin: 0 0 10px; padding-bottom: 5px; border-bottom: 1px solid #444; color: #fff; }
-.breakdown-item { display: flex; justify-content: space-between; padding: 4px; font-size: 0.9em; }
-.breakdown-item.sub-item { padding-left: 15px; font-size: 0.85em; }
+.breakdown-item { display: flex; justify-content: space-between; align-items: center; padding: 4px; font-size: 0.9em; }
 .breakdown-item span:first-child { color: #ccc; }
-.breakdown-item span:last-child { font-weight: bold; color: #fff; background-color: #555; padding: 0 6px; border-radius: 3px; }
-.synergy-bonus { margin-top: 20px; padding-top: 10px; border-top: 1px solid #444; }
+.role-split { display: flex; gap: 6px; }
+.role-split span { font-weight: bold; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+.face-count { background-color: #388E3C; } /* Green for Face */
+.heel-count { background-color: #D32F2F; } /* Red for Heel */
 #synergy-list { list-style: none; padding: 0; color: #FFC107; }
 

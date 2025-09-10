@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const superstarListContainer = document.getElementById('superstar-list');
     const budgetDisplay = document.getElementById('budget-display');
     const draftedListContainer = document.getElementById('drafted-list');
-    const synergyListContainer = document.getElementById('synergy-list');
+    const synergyListContainer = document.getElementById('synergy-bonus');
     const totalDraftedCount = document.getElementById('total-drafted-count');
     const dynamicFilterContainer = document.getElementById('dynamic-filter-container');
     const addFilterBtn = document.getElementById('add-filter-btn');
@@ -22,14 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let draftedRoster = [];
     const MAX_FILTERS = 3;
     const filterableProperties = { 'class': 'Class', 'role': 'Role', 'gender': 'Gender', 'team': 'Team' };
+    const classes = ['Fighter', 'Bruiser', 'Cruiser', 'Giant', 'Specialist'];
 
     // --- Initial Setup ---
     fetch('roster.json')
         .then(response => response.json())
         .then(data => {
             allSuperstars = data.superstars;
-            loadState(); // Load saved data first
-            resetFilters(); // Then setup filters and display
+            loadState();
+            resetFilters();
         });
 
     // --- Event Listeners ---
@@ -50,10 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- State Management (Save/Load) ---
     function saveState() {
-        const state = {
-            budget: budget,
-            draftedRosterNames: draftedRoster.map(s => s.name)
-        };
+        const state = { budget: budget, draftedRosterNames: draftedRoster.map(s => s.name) };
         localStorage.setItem('wweDraftState', JSON.stringify(state));
     }
 
@@ -62,295 +60,64 @@ document.addEventListener('DOMContentLoaded', () => {
         if (savedState) {
             const state = JSON.parse(savedState);
             budget = state.budget;
-            draftedRoster = state.draftedRosterNames
-                .map(name => allSuperstars.find(s => s.name === name))
-                .filter(Boolean); // Filter out any nulls if a superstar was removed from JSON
+            draftedRoster = state.draftedRosterNames.map(name => allSuperstars.find(s => s.name === name)).filter(Boolean);
         }
         updateAllDisplays();
     }
 
     // --- Core Interaction Functions ---
-    function handleDraftClick(e) {
-        if (e.target.classList.contains('draft-button')) {
-            const superstarName = e.target.dataset.name;
-            const superstar = allSuperstars.find(s => s.name === superstarName);
-            if (superstar && budget >= superstar.cost) {
-                budget -= superstar.cost;
-                draftedRoster.push(superstar);
-                updateAllDisplays();
-            }
-        }
-    }
-
-    function handleRemoveClick(e) {
-        if (e.target.classList.contains('remove-superstar-btn')) {
-            const superstarName = e.target.dataset.name;
-            const superstarIndex = draftedRoster.findIndex(s => s.name === superstarName);
-            if (superstarIndex > -1) {
-                const superstar = draftedRoster[superstarIndex];
-                budget += superstar.cost;
-                draftedRoster.splice(superstarIndex, 1);
-                updateAllDisplays();
-                applyFiltersAndSort(); // Re-check draft button disabled states
-            }
-        }
-    }
-
-    function resetRoster() {
-        if (!confirm('Are you sure you want to reset your entire roster? This will clear your saved progress.')) return;
-        budget = 4000000;
-        draftedRoster = [];
-        updateAllDisplays();
-        applyFiltersAndSort();
-    }
+    function handleDraftClick(e) { if (e.target.classList.contains('draft-button')) { const sName = e.target.dataset.name; const s = allSuperstars.find(i => i.name === sName); if (s && budget >= s.cost) { budget -= s.cost; draftedRoster.push(s); updateAllDisplays(); } } }
+    function handleRemoveClick(e) { if (e.target.classList.contains('remove-superstar-btn')) { const sName = e.target.dataset.name; const sIndex = draftedRoster.findIndex(s => s.name === sName); if (sIndex > -1) { const s = draftedRoster[sIndex]; budget += s.cost; draftedRoster.splice(sIndex, 1); updateAllDisplays(); applyFiltersAndSort(); } } }
+    function resetRoster() { if (!confirm('Are you sure you want to reset your entire roster? This will clear your saved progress.')) return; budget = 4000000; draftedRoster = []; updateAllDisplays(); applyFiltersAndSort(); }
 
     // --- Display & Filtering ---
-    function applyFiltersAndSort() {
-        let processedSuperstars = [...allSuperstars];
-        const filterRows = dynamicFilterContainer.querySelectorAll('.filter-row');
-        filterRows.forEach(row => {
-            const type = row.querySelector('.filter-type').value;
-            const value = row.querySelector('.filter-value').value;
-            if (type && value) {
-                processedSuperstars = processedSuperstars.filter(s => String(s[type]) === value);
-            }
-        });
-        const sortValue = sortFilter.value;
-        switch (sortValue) {
-            case 'cost-desc': processedSuperstars.sort((a, b) => b.cost - a.cost); break;
-            case 'cost-asc':  processedSuperstars.sort((a, b) => a.cost - b.cost); break;
-            case 'name-asc':  processedSuperstars.sort((a, b) => a.name.localeCompare(b.name)); break;
-            case 'name-desc': processedSuperstars.sort((a, b) => b.name.localeCompare(a.name)); break;
-            case 'pop-desc':  processedSuperstars.sort((a, b) => b.pop - a.pop); break;
-            case 'sta-desc':  processedSuperstars.sort((a, b) => b.sta - a.sta); break;
-        }
-        displaySuperstars(processedSuperstars);
-    }
-
-    function displaySuperstars(superstars) {
-        superstarListContainer.innerHTML = '';
-        superstars.forEach(superstar => {
-            const card = document.createElement('div');
-            card.className = `superstar-card ${superstar.role}`;
-            card.innerHTML = `
-                <img src="${superstar.image || ''}" alt="${superstar.name}" class="superstar-card-image" loading="lazy" onerror="this.style.display='none'">
-                <div class="superstar-card-content">
-                    <h3>${superstar.name}</h3>
-                    <div class="stats">
-                        <p><strong>Cost:</strong> $${superstar.cost.toLocaleString()}</p>
-                        <p><strong>Class:</strong> ${superstar.class}</p>
-                        <p><strong>POP:</strong> ${superstar.pop} | <strong>STA:</strong> ${superstar.sta}</p>
-                    </div>
-                    <button class="draft-button" data-name="${superstar.name}">Draft</button>
-                </div>
-            `;
-            superstarListContainer.appendChild(card);
-        });
-        updateDraftButtons();
-    }
-
-    function resetFilters() {
-        dynamicFilterContainer.innerHTML = '';
-        addFilterRow();
-        updateAddFilterButtonState();
-        applyFiltersAndSort();
-    }
-
-    function addFilterRow() {
-        if (dynamicFilterContainer.children.length >= MAX_FILTERS) return;
-        const filterRow = document.createElement('div');
-        filterRow.className = 'filter-row';
-        const typeSelect = document.createElement('select');
-        typeSelect.className = 'filter-type';
-        typeSelect.innerHTML = `<option value="">-- Filter by Property --</option>`;
-        for (const prop in filterableProperties) {
-            typeSelect.innerHTML += `<option value="${prop}">${filterableProperties[prop]}</option>`;
-        }
-        const valueSelect = document.createElement('select');
-        valueSelect.className = 'filter-value';
-        valueSelect.disabled = true;
-        filterRow.appendChild(typeSelect);
-        filterRow.appendChild(valueSelect);
-        dynamicFilterContainer.appendChild(filterRow);
-        updateAddFilterButtonState();
-    }
-
-    function populateValueSelect(typeSelectElement) {
-        const filterRow = typeSelectElement.parentElement;
-        const valueSelect = filterRow.querySelector('.filter-value');
-        const selectedType = typeSelectElement.value;
-        valueSelect.innerHTML = '';
-        if (selectedType) {
-            const values = [...new Set(allSuperstars.map(s => s[selectedType]).filter(Boolean))];
-            values.sort();
-            valueSelect.innerHTML = `<option value="">-- Select Value --</option>`;
-            values.forEach(val => {
-                valueSelect.innerHTML += `<option value="${val}">${val}</option>`;
-            });
-            valueSelect.disabled = false;
-        } else {
-            valueSelect.disabled = true;
-        }
-    }
-
-    function updateAddFilterButtonState() {
-        addFilterBtn.disabled = dynamicFilterContainer.children.length >= MAX_FILTERS;
-    }
+    function applyFiltersAndSort() { let p = [...allSuperstars]; const f = dynamicFilterContainer.querySelectorAll('.filter-row'); f.forEach(r => { const t = r.querySelector('.filter-type').value; const v = r.querySelector('.filter-value').value; if (t && v) p = p.filter(s => String(s[t]) === v); }); const sV = sortFilter.value; switch (sV) { case 'cost-desc': p.sort((a, b) => b.cost - a.cost); break; case 'cost-asc': p.sort((a, b) => a.cost - b.cost); break; case 'name-asc': p.sort((a, b) => a.name.localeCompare(b.name)); break; case 'name-desc': p.sort((a, b) => b.name.localeCompare(a.name)); break; case 'pop-desc': p.sort((a, b) => b.pop - a.pop); break; case 'sta-desc': p.sort((a, b) => b.sta - a.sta); break; } displaySuperstars(p); }
+    function displaySuperstars(superstars) { superstarListContainer.innerHTML = ''; superstars.forEach(s => { const c = document.createElement('div'); c.className = `superstar-card ${s.role}`; c.innerHTML = `<img src="${s.image || ''}" alt="${s.name}" class="superstar-card-image" loading="lazy" onerror="this.style.display='none'"><div class="superstar-card-content"><h3>${s.name}</h3><div class="stats"><p><strong>Cost:</strong> $${s.cost.toLocaleString()}</p><p><strong>Class:</strong> ${s.class}</p><p><strong>POP:</strong> ${s.pop} | <strong>STA:</strong> ${s.sta}</p></div><button class="draft-button" data-name="${s.name}">Draft</button></div>`; superstarListContainer.appendChild(c); }); updateDraftButtons(); }
+    function resetFilters() { dynamicFilterContainer.innerHTML = ''; addFilterRow(); updateAddFilterButtonState(); applyFiltersAndSort(); }
+    function addFilterRow() { if (dynamicFilterContainer.children.length >= MAX_FILTERS) return; const f = document.createElement('div'); f.className = 'filter-row'; const t = document.createElement('select'); t.className = 'filter-type'; t.innerHTML = `<option value="">-- Filter by Property --</option>`; for (const p in filterableProperties) { t.innerHTML += `<option value="${p}">${filterableProperties[p]}</option>`; } const v = document.createElement('select'); v.className = 'filter-value'; v.disabled = true; f.appendChild(t); f.appendChild(v); dynamicFilterContainer.appendChild(f); updateAddFilterButtonState(); }
+    function populateValueSelect(t) { const r = t.parentElement; const v = r.querySelector('.filter-value'); const s = t.value; v.innerHTML = ''; if (s) { const V = [...new Set(allSuperstars.map(i => i[s]).filter(Boolean))]; V.sort(); v.innerHTML = `<option value="">-- Select Value --</option>`; V.forEach(i => { v.innerHTML += `<option value="${i}">${i}</option>`; }); v.disabled = false; } else { v.disabled = true; } }
+    function updateAddFilterButtonState() { addFilterBtn.disabled = dynamicFilterContainer.children.length >= MAX_FILTERS; }
 
     // --- UI Update Functions ---
-    function updateAllDisplays() {
-        updateBudget();
-        updateDraftedRoster();
-        updateDraftButtons();
-        updateBreakdownCounters();
-        checkSynergy();
-        saveState();
-    }
+    function updateAllDisplays() { updateBudget(); updateDraftedRoster(); updateDraftButtons(); updateBreakdownCounters(); checkSynergy(); saveState(); }
+    function updateDraftedRoster() { draftedListContainer.innerHTML = ''; draftedRoster.forEach(s => { const l = document.createElement('li'); l.innerHTML = `<span>${s.name}</span><button class="remove-superstar-btn" data-name="${s.name}" title="Remove Superstar">×</button>`; draftedListContainer.appendChild(l); }); totalDraftedCount.textContent = draftedRoster.length; }
+    function updateBudget() { budgetDisplay.textContent = `$${budget.toLocaleString()}`; budgetDisplay.style.color = budget < 0 ? '#D32F2F' : '#4CAF50'; }
+    function updateDraftButtons() { const b = document.querySelectorAll('.draft-button'); b.forEach(B => { const n = B.dataset.name; const s = allSuperstars.find(i => i.name === n); const d = draftedRoster.some(i => i.name === n); B.disabled = d || s.cost > budget; }); }
 
-    function updateDraftedRoster() {
-        draftedListContainer.innerHTML = '';
-        draftedRoster.forEach(superstar => {
-            const listItem = document.createElement('li');
-            listItem.innerHTML = `
-                <span>${superstar.name}</span>
-                <button class="remove-superstar-btn" data-name="${superstar.name}" title="Remove Superstar">×</button>
-            `;
-            draftedListContainer.appendChild(listItem);
-        });
-        totalDraftedCount.textContent = draftedRoster.length;
-    }
-
-    function updateBudget() {
-        budgetDisplay.textContent = `$${budget.toLocaleString()}`;
-        budgetDisplay.style.color = budget < 0 ? '#D32F2F' : '#4CAF50';
-    }
-
-    function updateDraftButtons() {
-        const buttons = document.querySelectorAll('.draft-button');
-        buttons.forEach(button => {
-            const superstarName = button.dataset.name;
-            const superstar = allSuperstars.find(s => s.name === superstarName);
-            const isDrafted = draftedRoster.some(s => s.name === superstarName);
-            button.disabled = isDrafted || superstar.cost > budget;
-        });
-    }
-
+    // --- Granular Breakdown Counter Logic ---
     function updateBreakdownCounters() {
-        const breakdownContainer = document.getElementById('roster-breakdown');
-        const counts = { male: { total: 0, Face: 0, Heel: 0, Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0 }, female: { total: 0, Face: 0, Heel: 0, Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0 } };
-        draftedRoster.forEach(s => { const d = s.gender.toLowerCase(); counts[d].total++; counts[d][s.role]++; counts[d][s.class]++; });
-        breakdownContainer.innerHTML = `
-            <h3>Roster Breakdown</h3>
-            <div class="division-tracker">
-                <h4>Male Division (<span>${counts.male.total}</span>)</h4>
-                <div class="breakdown-item"><span>Face</span><span>${counts.male.Face}</span></div>
-                <div class="breakdown-item"><span>Heel</span><span>${counts.male.Heel}</span></div>
-                <div class="breakdown-item sub-item"><span>Fighter</span><span>${counts.male.Fighter}</span></div>
-                <div class="breakdown-item sub-item"><span>Bruiser</span><span>${counts.male.Bruiser}</span></div>
-                <div class="breakdown-item sub-item"><span>Cruiser</span><span>${counts.male.Cruiser}</span></div>
-                <div class="breakdown-item sub-item"><span>Giant</span><span>${counts.male.Giant}</span></div>
-                <div class="breakdown-item sub-item"><span>Specialist</span><span>${counts.male.Specialist}</span></div>
-            </div>
-            <div class="division-tracker">
-                <h4>Female Division (<span>${counts.female.total}</span>)</h4>
-                <div class="breakdown-item"><span>Face</span><span>${counts.female.Face}</span></div>
-                <div class="breakdown-item"><span>Heel</span><span>${counts.female.Heel}</span></div>
-                <div class="breakdown-item sub-item"><span>Fighter</span><span>${counts.female.Fighter}</span></div>
-                <div class="breakdown-item sub-item"><span>Bruiser</span><span>${counts.female.Bruiser}</span></div>
-                <div class="breakdown-item sub-item"><span>Cruiser</span><span>${counts.female.Cruiser}</span></div>
-                <div class="breakdown-item sub-item"><span>Giant</span><span>${counts.female.Giant}</span></div>
-                <div class="breakdown-item sub-item"><span>Specialist</span><span>${counts.female.Specialist}</span></div>
-            </div>
-        `;
+        const counts = { male: { total: 0 }, female: { total: 0 } };
+        ['male', 'female'].forEach(gender => {
+            classes.forEach(c => {
+                counts[gender][c] = { Face: 0, Heel: 0 };
+            });
+        });
+        draftedRoster.forEach(s => {
+            const gender = s.gender.toLowerCase();
+            const sClass = s.class;
+            const sRole = s.role;
+            counts[gender].total++;
+            if (classes.includes(sClass) && (sRole === 'Face' || sRole === 'Heel')) {
+                counts[gender][sClass][sRole]++;
+            }
+        });
+        document.getElementById('male-total-count').textContent = counts.male.total;
+        document.getElementById('female-total-count').textContent = counts.female.total;
+        ['male', 'female'].forEach(gender => {
+            classes.forEach(c => {
+                const sClass = c.toLowerCase();
+                document.getElementById(`${gender}-${sClass}-face`).textContent = counts[gender][c].Face;
+                document.getElementById(`${gender}-${sClass}-heel`).textContent = counts[gender][c].Heel;
+            });
+        });
     }
 
-    function checkSynergy() {
-        const synergyBonusContainer = document.getElementById('synergy-bonus');
-        synergyBonusContainer.innerHTML = '';
-        const teamCounts = {};
-        draftedRoster.forEach(superstar => { if (superstar.team) teamCounts[superstar.team] = (teamCounts[superstar.team] || 0) + 1; });
-        let hasSynergy = false;
-        for (const team in teamCounts) {
-            if (teamCounts[team] > 1) {
-                if (!hasSynergy) {
-                    synergyBonusContainer.innerHTML = '<h3>Synergy Bonuses</h3><ul id="synergy-list"></ul>';
-                    hasSynergy = true;
-                }
-                const list = synergyBonusContainer.querySelector('#synergy-list');
-                const listItem = document.createElement('li');
-                listItem.textContent = `${team} (${teamCounts[team]} members)`;
-                list.appendChild(listItem);
-            }
-        }
-    }
+    function checkSynergy() { const s = document.getElementById('synergy-bonus'); s.innerHTML = ''; const t = {}; draftedRoster.forEach(i => { if (i.team) t[i.team] = (t[i.team] || 0) + 1; }); let h = false; for (const T in t) { if (t[T] > 1) { if (!h) { s.innerHTML = '<h3>Synergy Bonuses</h3><ul id="synergy-list"></ul>'; h = true; } const l = s.querySelector('#synergy-list'); const i = document.createElement('li'); i.textContent = `${T} (${t[T]} members)`; l.appendChild(i); } } }
 
     // --- Export Logic ---
-    function generateExport(format) {
-        const totalCost = draftedRoster.reduce((sum, s) => sum + s.cost, 0);
-        const completedTeams = findCompletedTeams();
-        const rivalries = findPotentialRivalries();
-        let summary = '', mdSummary = '';
-        summary += `ROSTER SUMMARY\n====================\n`;
-        summary += `Total Superstars: ${draftedRoster.length}\nTotal Cost: $${totalCost.toLocaleString()}\nBudget Remaining: $${budget.toLocaleString()}\n\n`;
-        summary += `DRAFTED SUPERSTARS:\n`;
-        draftedRoster.forEach(s => { summary += `- ${s.name} (${s.role} ${s.class})\n`; });
-        if (completedTeams.length > 0) { summary += `\nCOMPLETED TEAMS:\n`; completedTeams.forEach(team => { summary += `- ${team}\n`; }); }
-        summary += `\nPOTENTIAL RIVALRIES:\n`;
-        if (rivalries.ideal.length > 0) { summary += `Ideal Matchups (High Ceiling):\n`; rivalries.ideal.forEach(r => { summary += `- ${r.superstar1.name} vs. ${r.superstar2.name} [${r.type}]\n`; }); }
-        if (rivalries.specialist.length > 0) { summary += `Specialist Matchups (High Floor):\n`; rivalries.specialist.forEach(r => { summary += `- ${r.superstar1.name} vs. ${r.superstar2.name} [${r.type}]\n`; }); }
-        if (rivalries.ideal.length === 0 && rivalries.specialist.length === 0) { summary += `- No ideal rivalries found.\n`; }
-        mdSummary += `# Roster Summary\n\n| Stat | Value |\n|:---|:---|\n`;
-        mdSummary += `| Total Superstars | ${draftedRoster.length} |\n| Total Cost | $${totalCost.toLocaleString()} |\n| Budget Remaining | $${budget.toLocaleString()} |\n\n## Drafted Superstars\n`;
-        draftedRoster.forEach(s => { mdSummary += `* **${s.name}** (${s.role} ${s.class})\n`; });
-        if (completedTeams.length > 0) { mdSummary += `\n## Completed Teams\n`; completedTeams.forEach(team => { mdSummary += `* ${team}\n`; }); }
-        mdSummary += `\n## Potential Rivalries\n`;
-        if (rivalries.ideal.length > 0) { mdSummary += `### Ideal Matchups (High Ceiling)\n`; rivalries.ideal.forEach(r => { mdSummary += `* **${r.superstar1.name}** vs. **${r.superstar2.name}** _(${r.type})_\n`; }); }
-        if (rivalries.specialist.length > 0) { mdSummary += `### Specialist Matchups (High Floor)\n`; rivalries.specialist.forEach(r => { mdSummary += `* **${r.superstar1.name}** vs. **${r.superstar2.name}** _(${r.type})_\n`; }); }
-        if (rivalries.ideal.length === 0 && rivalries.specialist.length === 0) { mdSummary += `*No ideal rivalries found.*\n`; }
-        if (format === 'clipboard') { navigator.clipboard.writeText(summary).then(() => alert('Roster summary copied to clipboard!')); }
-        else if (format === 'txt') { downloadFile('roster.txt', summary); }
-        else if (format === 'md') { downloadFile('roster.md', mdSummary); }
-    }
-
-    function findCompletedTeams() {
-        const draftedTeams = {};
-        draftedRoster.forEach(s => { if (s.team) { if (!draftedTeams[s.team]) draftedTeams[s.team] = []; draftedTeams[s.team].push(s.name); } });
-        const completed = [];
-        for (const teamName in draftedTeams) {
-            const totalInTeam = allSuperstars.filter(s => s.team === teamName).length;
-            if (draftedTeams[teamName].length === totalInTeam && totalInTeam > 1) completed.push(teamName);
-        }
-        return completed;
-    }
-
-    function findPotentialRivalries() {
-        const rules = { 'Fighter': 'Bruiser', 'Bruiser': 'Fighter', 'Cruiser': 'Giant', 'Giant': 'Cruiser' };
-        const rivalries = { ideal: [], specialist: [] };
-        const faces = draftedRoster.filter(s => s.role === 'Face');
-        const heels = draftedRoster.filter(s => s.role === 'Heel');
-        for (const face of faces) {
-            for (const heel of heels) {
-                if (face.gender !== heel.gender) continue;
-                if (rules[face.class] === heel.class) {
-                    rivalries.ideal.push({ superstar1: face, superstar2: heel, type: `${face.class} vs. ${heel.class}` });
-                } else if (face.class === 'Specialist' && heel.class !== 'Specialist') {
-                    rivalries.specialist.push({ superstar1: face, superstar2: heel, type: `Specialist vs. ${heel.class}` });
-                } else if (heel.class === 'Specialist' && face.class !== 'Specialist') {
-                    rivalries.specialist.push({ superstar1: face, superstar2: heel, type: `${face.class} vs. Specialist` });
-                }
-            }
-        }
-        return rivalries;
-    }
-
-    function downloadFile(filename, content) {
-        const element = document.createElement('a');
-        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
-        element.setAttribute('download', filename);
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    }
+    function generateExport(format) { const t = draftedRoster.reduce((s, c) => s + c.cost, 0); const c = findCompletedTeams(); const r = findPotentialRivalries(); let sm = '', md = ''; sm += `ROSTER SUMMARY\n====================\n`; sm += `Total Superstars: ${draftedRoster.length}\nTotal Cost: $${t.toLocaleString()}\nBudget Remaining: $${budget.toLocaleString()}\n\n`; sm += `DRAFTED SUPERSTARS:\n`; draftedRoster.forEach(s => { sm += `- ${s.name} (${s.role} ${s.class})\n`; }); if (c.length > 0) { sm += `\nCOMPLETED TEAMS:\n`; c.forEach(t => { sm += `- ${t}\n`; }); } sm += `\nPOTENTIAL RIVALRIES:\n`; if (r.ideal.length > 0) { sm += `Ideal Matchups (High Ceiling):\n`; r.ideal.forEach(i => { sm += `- ${i.s1.name} vs. ${i.s2.name} [${i.type}]\n`; }); } if (r.specialist.length > 0) { sm += `Specialist Matchups (High Floor):\n`; r.specialist.forEach(i => { sm += `- ${i.s1.name} vs. ${i.s2.name} [${i.type}]\n`; }); } if (r.ideal.length === 0 && r.specialist.length === 0) { sm += `- No ideal rivalries found.\n`; } md += `# Roster Summary\n\n| Stat | Value |\n|:---|:---|\n`; md += `| Total Superstars | ${draftedRoster.length} |\n| Total Cost | $${t.toLocaleString()} |\n| Budget Remaining | $${budget.toLocaleString()} |\n\n## Drafted Superstars\n`; draftedRoster.forEach(s => { md += `* **${s.name}** (${s.role} ${s.class})\n`; }); if (c.length > 0) { md += `\n## Completed Teams\n`; c.forEach(t => { md += `* ${t}\n`; }); } md += `\n## Potential Rivalries\n`; if (r.ideal.length > 0) { md += `### Ideal Matchups (High Ceiling)\n`; r.ideal.forEach(i => { md += `* **${i.s1.name}** vs. **${i.s2.name}** _(${i.type})_\n`; }); } if (r.specialist.length > 0) { md += `### Specialist Matchups (High Floor)\n`; r.specialist.forEach(i => { md += `* **${i.s1.name}** vs. **${i.s2.name}** _(${i.type})_\n`; }); } if (r.ideal.length === 0 && r.specialist.length === 0) { md += `*No ideal rivalries found.*\n`; } if (format === 'clipboard') { navigator.clipboard.writeText(sm).then(() => alert('Roster summary copied!')); } else if (format === 'txt') { downloadFile('roster.txt', sm); } else if (format === 'md') { downloadFile('roster.md', md); } }
+    function findCompletedTeams() { const d = {}; draftedRoster.forEach(s => { if (s.team) { if (!d[s.team]) d[s.team] = []; d[s.team].push(s.name); } }); const c = []; for (const t in d) { const T = allSuperstars.filter(s => s.team === t).length; if (d[t].length === T && T > 1) c.push(t); } return c; }
+    function findPotentialRivalries() { const r = { 'Fighter': 'Bruiser', 'Bruiser': 'Fighter', 'Cruiser': 'Giant', 'Giant': 'Cruiser' }; const p = { ideal: [], specialist: [] }; const f = draftedRoster.filter(s => s.role === 'Face'); const h = draftedRoster.filter(s => s.role === 'Heel'); for (const a of f) { for (const b of h) { if (a.gender !== b.gender) continue; if (r[a.class] === b.class) { p.ideal.push({ s1: a, s2: b, type: `${a.class} vs. ${b.class}` }); } else if (a.class === 'Specialist' && b.class !== 'Specialist') { p.specialist.push({ s1: a, s2: b, type: `Specialist vs. ${b.class}` }); } else if (b.class === 'Specialist' && a.class !== 'Specialist') { p.specialist.push({ s1: a, s2: b, type: `${a.class} vs. Specialist` }); } } } return p; }
+    function downloadFile(filename, content) { const e = document.createElement('a'); e.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content)); e.setAttribute('download', filename); e.style.display = 'none'; document.body.appendChild(e); e.click(); document.body.removeChild(e); }
 });
 
