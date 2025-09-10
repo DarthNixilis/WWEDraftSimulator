@@ -16,7 +16,7 @@ header h1 { margin: 0; color: #ffffff; }
 .draft-button { margin-top: auto; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s; }
 .draft-button:hover { background-color: #0056b3; }
 .draft-button:disabled { background-color: #555; cursor: not-allowed; }
-#drafted-list { list-style: none; padding: 0; }
+#drafted-list { list-style: none; padding: 0; margin-top: 15px; }
 #drafted-list li { background-color: #3c3c3c; padding: 8px; margin-bottom: 5px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
 
 /* Dynamic Filter Styles */
@@ -31,8 +31,21 @@ header h1 { margin: 0; color: #ffffff; }
 #add-filter-btn { background-color: #007BFF; color: white; }
 #add-filter-btn:hover { background-color: #0056b3; }
 #add-filter-btn:disabled { background-color: #555; cursor: not-allowed; }
-#reset-filters-btn { background-color: #D32F2F; color: white; }
-#reset-filters-btn:hover { background-color: #a02424; }
+#reset-filters-btn { background-color: #6c757d; color: white; }
+#reset-filters-btn:hover { background-color: #5a6268; }
+
+/* --- NEW & UPDATED STYLES --- */
+.roster-actions { display: flex; gap: 10px; margin-bottom: 10px; }
+.roster-actions button { flex-grow: 1; padding: 10px; font-size: 1em; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; transition: background-color 0.2s; }
+#toggle-export-btn { background-color: #FFC107; color: #1a1a1a; }
+#toggle-export-btn:hover { background-color: #d4a106; }
+#reset-roster-btn { background-color: #D32F2F; color: white; }
+#reset-roster-btn:hover { background-color: #a02424; }
+
+.export-options { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; }
+.export-options.hidden { display: none; }
+.export-options button { background-color: #495057; color: white; text-align: left; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer; }
+.export-options button:hover { background-color: #5a6268; }
 
 /* Roster Breakdown Styles */
 .roster-breakdown { margin-top: 20px; padding-top: 10px; border-top: 1px solid #444; }

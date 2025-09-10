@@ -19,21 +19,30 @@
         <div class="roster-pool">
             <h2>Available Superstars</h2>
             <div class="filter-controls">
-                <div id="dynamic-filter-container">
-                    <!-- Filter dropdowns will be dynamically added here -->
-                </div>
+                <div id="dynamic-filter-container"></div>
                 <div class="filter-actions">
                     <button id="add-filter-btn">Add Filter</button>
                     <button id="reset-filters-btn">Reset All Filters</button>
                 </div>
             </div>
-            <div id="superstar-list" class="superstar-grid">
-                <!-- Superstars will be loaded here by JavaScript -->
-            </div>
+            <div id="superstar-list" class="superstar-grid"></div>
         </div>
 
         <div class="drafted-roster">
             <h2>Your Roster (<span id="total-drafted-count">0</span>)</h2>
+            
+            <!-- START: New Action Buttons Section -->
+            <div class="roster-actions">
+                <button id="toggle-export-btn">Export Roster</button>
+                <button id="reset-roster-btn">Reset Roster</button>
+            </div>
+            <div id="export-options" class="export-options hidden">
+                <button id="export-clipboard-btn">📋 Copy to Clipboard</button>
+                <button id="export-txt-btn">📄 Download as .txt</button>
+                <button id="export-md-btn">Ⓜ️ Download as .md</button>
+            </div>
+            <!-- END: New Action Buttons Section -->
+
             <ul id="drafted-list"></ul>
 
             <div id="roster-breakdown" class="roster-breakdown">
