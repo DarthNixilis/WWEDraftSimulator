@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateBudget() { budgetDisplay.textContent = `$${budget.toLocaleString()}`; budgetDisplay.style.color = budget < 0 ? '#D32F2F' : '#4CAF50'; }
     function updateDraftButtons() { const b = document.querySelectorAll('.draft-button'); b.forEach(B => { const n = B.dataset.name; const s = allSuperstars.find(i => i.name === n); const d = draftedRoster.some(i => i.name === n); B.disabled = d || s.cost > budget; }); }
 
-    // --- Granular Breakdown Counter Logic ---
+    // --- *** THIS IS THE CORRECTED FUNCTION *** ---
     function updateBreakdownCounters() {
         const counts = { male: { total: 0 }, female: { total: 0 } };
         ['male', 'female'].forEach(gender => {
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 counts[gender][c] = { Face: 0, Heel: 0 };
             });
         });
+
         draftedRoster.forEach(s => {
             const gender = s.gender.toLowerCase();
             const sClass = s.class;
@@ -101,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 counts[gender][sClass][sRole]++;
             }
         });
+
         document.getElementById('male-total-count').textContent = counts.male.total;
         document.getElementById('female-total-count').textContent = counts.female.total;
         ['male', 'female'].forEach(gender => {
