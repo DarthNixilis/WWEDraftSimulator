@@ -4,72 +4,116 @@ document.addEventListener('DOMContentLoaded', () => {
     const budgetDisplay = document.getElementById('budget-display');
     const draftedListContainer = document.getElementById('drafted-list');
     const synergyListContainer = document.getElementById('synergy-list');
-    const nameFilter = document.getElementById('name-filter');
-    const genderFilter = document.getElementById('gender-filter');
-    const sortFilter = document.getElementById('sort-filter'); // New sort dropdown
     const totalDraftedCount = document.getElementById('total-drafted-count');
+    const dynamicFilterContainer = document.getElementById('dynamic-filter-container');
+    const addFilterBtn = document.getElementById('add-filter-btn');
+    const resetFiltersBtn = document.getElementById('reset-filters-btn');
 
     // --- State Variables ---
     let budget = 4000000;
     let allSuperstars = [];
     let draftedRoster = [];
+    const MAX_FILTERS = 3;
+
+    const filterableProperties = {
+        'class': 'Class',
+        'role': 'Role',
+        'gender': 'Gender',
+        'team': 'Team'
+    };
 
     // --- Fetch initial data ---
     fetch('roster.json')
         .then(response => response.json())
         .then(data => {
             allSuperstars = data.superstars;
-            applyFiltersAndSort(); // Initial display
+            addFilterRow(); // *** FIX: Add the first filter row on page load ***
+            applyFilters(); 
         });
 
     // --- Event Listeners ---
     superstarListContainer.addEventListener('click', handleDraftClick);
-    nameFilter.addEventListener('keyup', applyFiltersAndSort);
-    genderFilter.addEventListener('change', applyFiltersAndSort);
-    sortFilter.addEventListener('change', applyFiltersAndSort);
+    addFilterBtn.addEventListener('click', addFilterRow);
+    resetFiltersBtn.addEventListener('click', resetFilters);
+    // *** FIX: Correctly listen for changes on the container to handle dynamic elements ***
+    dynamicFilterContainer.addEventListener('change', (event) => {
+        const target = event.target;
+        if (target.classList.contains('filter-type')) {
+            populateValueSelect(target);
+        }
+        applyFilters();
+    });
+
 
     // --- Core Functions ---
 
-    function handleDraftClick(e) {
-        if (e.target.classList.contains('draft-button')) {
-            const superstarName = e.target.dataset.name;
-            const superstar = allSuperstars.find(s => s.name === superstarName);
-            
-            if (superstar && budget >= superstar.cost) {
-                budget -= superstar.cost;
-                draftedRoster.push(superstar);
-                updateAllDisplays();
-            }
+    function addFilterRow() {
+        if (dynamicFilterContainer.children.length >= MAX_FILTERS) return;
+
+        const filterRow = document.createElement('div');
+        filterRow.className = 'filter-row';
+
+        const typeSelect = document.createElement('select');
+        typeSelect.className = 'filter-type';
+        typeSelect.innerHTML = `<option value="">-- Filter by Property --</option>`;
+        for (const prop in filterableProperties) {
+            typeSelect.innerHTML += `<option value="${prop}">${filterableProperties[prop]}</option>`;
+        }
+
+        const valueSelect = document.createElement('select');
+        valueSelect.className = 'filter-value';
+        valueSelect.disabled = true;
+
+        filterRow.appendChild(typeSelect);
+        filterRow.appendChild(valueSelect);
+        dynamicFilterContainer.appendChild(filterRow);
+
+        updateAddFilterButtonState();
+    }
+    
+    function populateValueSelect(typeSelectElement) {
+        const filterRow = typeSelectElement.parentElement;
+        const valueSelect = filterRow.querySelector('.filter-value');
+        const selectedType = typeSelectElement.value;
+
+        valueSelect.innerHTML = ''; // Clear previous options
+        if (selectedType) {
+            const values = [...new Set(allSuperstars.map(s => s[selectedType]).filter(Boolean))];
+            values.sort();
+            valueSelect.innerHTML = `<option value="">-- Select Value --</option>`;
+            values.forEach(val => {
+                valueSelect.innerHTML += `<option value="${val}">${val}</option>`;
+            });
+            valueSelect.disabled = false;
+        } else {
+            valueSelect.disabled = true;
         }
     }
 
-    function applyFiltersAndSort() {
-        let processedSuperstars = [...allSuperstars];
+    function resetFilters() {
+        dynamicFilterContainer.innerHTML = '';
+        addFilterRow(); // Add back the initial empty filter
+        updateAddFilterButtonState();
+        applyFilters();
+    }
 
-        // 1. Filtering
-        const nameQuery = nameFilter.value.toLowerCase();
-        const genderQuery = genderFilter.value;
+    function updateAddFilterButtonState() {
+        addFilterBtn.disabled = dynamicFilterContainer.children.length >= MAX_FILTERS;
+    }
 
-        if (nameQuery) {
-            processedSuperstars = processedSuperstars.filter(s => s.name.toLowerCase().includes(nameQuery));
-        }
-        if (genderQuery !== 'all') {
-            processedSuperstars = processedSuperstars.filter(s => s.gender === genderQuery);
-        }
+    function applyFilters() {
+        let filteredSuperstars = [...allSuperstars];
+        const filterRows = dynamicFilterContainer.querySelectorAll('.filter-row');
 
-        // 2. Sorting
-        const sortValue = sortFilter.value;
-        switch (sortValue) {
-            case 'cost-desc': processedSuperstars.sort((a, b) => b.cost - a.cost); break;
-            case 'cost-asc':  processedSuperstars.sort((a, b) => a.cost - b.cost); break;
-            case 'name-asc':  processedSuperstars.sort((a, b) => a.name.localeCompare(b.name)); break;
-            case 'name-desc': processedSuperstars.sort((a, b) => b.name.localeCompare(a.name)); break;
-            case 'pop-desc':  processedSuperstars.sort((a, b) => b.pop - a.pop); break;
-            case 'sta-desc':  processedSuperstars.sort((a, b) => b.sta - a.sta); break;
-        }
-        
-        // 3. Display
-        displaySuperstars(processedSuperstars);
+        filterRows.forEach(row => {
+            const type = row.querySelector('.filter-type').value;
+            const value = row.querySelector('.filter-value').value;
+            if (type && value) {
+                filteredSuperstars = filteredSuperstars.filter(s => String(s[type]) === value);
+            }
+        });
+
+        displaySuperstars(filteredSuperstars);
     }
 
     function displaySuperstars(superstars) {
@@ -93,6 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDraftButtons();
     }
 
+    function handleDraftClick(e) {
+        if (e.target.classList.contains('draft-button')) {
+            const superstarName = e.target.dataset.name;
+            const superstar = allSuperstars.find(s => s.name === superstarName);
+            if (superstar && budget >= superstar.cost) {
+                budget -= superstar.cost;
+                draftedRoster.push(superstar);
+                updateAllDisplays();
+            }
+        }
+    }
+
     function updateAllDisplays() {
         updateBudget();
         updateDraftedRoster();
@@ -101,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkSynergy();
     }
 
+    // --- All other update functions (updateBudget, updateDraftedRoster, etc.) remain the same ---
     function updateDraftedRoster() {
         draftedListContainer.innerHTML = '';
         draftedRoster.forEach(superstar => {
@@ -131,15 +188,12 @@ document.addEventListener('DOMContentLoaded', () => {
             male: { total: 0, Face: 0, Heel: 0, Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0 },
             female: { total: 0, Face: 0, Heel: 0, Fighter: 0, Bruiser: 0, Cruiser: 0, Giant: 0, Specialist: 0 }
         };
-
         draftedRoster.forEach(s => {
-            const division = s.gender.toLowerCase(); // 'male' or 'female'
+            const division = s.gender.toLowerCase();
             counts[division].total++;
             counts[division][s.role]++;
             counts[division][s.class]++;
         });
-
-        // Update Male Division trackers
         document.getElementById('male-count').textContent = counts.male.total;
         document.getElementById('male-face-count').textContent = counts.male.Face;
         document.getElementById('male-heel-count').textContent = counts.male.Heel;
@@ -148,8 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('male-cruiser-count').textContent = counts.male.Cruiser;
         document.getElementById('male-giant-count').textContent = counts.male.Giant;
         document.getElementById('male-specialist-count').textContent = counts.male.Specialist;
-
-        // Update Female Division trackers
         document.getElementById('female-count').textContent = counts.female.total;
         document.getElementById('female-face-count').textContent = counts.female.Face;
         document.getElementById('female-heel-count').textContent = counts.female.Heel;
