@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportMdBtn = document.getElementById('export-md-btn');
     const resetRosterBtn = document.getElementById('reset-roster-btn');
     const sortFilter = document.getElementById('sort-filter');
-    const columnSwitcher = document.getElementById('column-switcher'); // New selector
 
     // --- State Variables ---
     let budget = 4000000;
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             allSuperstars = data.superstars;
             loadState();
-            setupColumnSwitcher(); // New setup function
             resetFilters();
         });
 
@@ -50,34 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('filter-type')) populateValueSelect(event.target);
         applyFiltersAndSort();
     });
-    columnSwitcher.addEventListener('click', handleColumnSwitch); // New listener
-
-    // --- START: New Column Switcher Logic ---
-    function setupColumnSwitcher() {
-        const savedCols = localStorage.getItem('wweDraftGridCols') || '2'; // Default to 2 columns
-        setGridColumns(savedCols);
-    }
-
-    function handleColumnSwitch(e) {
-        if (e.target.tagName === 'BUTTON') {
-            const numCols = e.target.dataset.columns;
-            setGridColumns(numCols);
-            localStorage.setItem('wweDraftGridCols', numCols);
-        }
-    }
-
-    function setGridColumns(numCols) {
-        // Remove all possible column classes
-        superstarListContainer.classList.remove('grid-cols-1', 'grid-cols-2', 'grid-cols-3');
-        // Add the selected one
-        superstarListContainer.classList.add(`grid-cols-${numCols}`);
-        // Update active button state
-        const buttons = columnSwitcher.querySelectorAll('button');
-        buttons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.columns === numCols);
-        });
-    }
-    // --- END: New Column Switcher Logic ---
 
     // --- State Management (Save/Load) ---
     function saveState() {
@@ -113,10 +83,43 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateDraftedRoster() { draftedListContainer.innerHTML = ''; draftedRoster.forEach(s => { const l = document.createElement('li'); l.innerHTML = `<span>${s.name}</span><button class="remove-superstar-btn" data-name="${s.name}" title="Remove Superstar">×</button>`; draftedListContainer.appendChild(l); }); totalDraftedCount.textContent = draftedRoster.length; }
     function updateBudget() { budgetDisplay.textContent = `$${budget.toLocaleString()}`; budgetDisplay.style.color = budget < 0 ? '#D32F2F' : '#4CAF50'; }
     function updateDraftButtons() { const b = document.querySelectorAll('.draft-button'); b.forEach(B => { const n = B.dataset.name; const s = allSuperstars.find(i => i.name === n); const d = draftedRoster.some(i => i.name === n); B.disabled = d || s.cost > budget; }); }
-    function updateBreakdownCounters() { const c = { male: { total: 0 }, female: { total: 0 } }; ['male', 'female'].forEach(g => { classes.forEach(cl => { c[g][cl] = { Face: 0, Heel: 0 }; }); }); draftedRoster.forEach(s => { const g = s.gender.toLowerCase(); const sC = s.class; const sR = s.role; c[g].total++; if (classes.includes(sC) && (sR === 'Face' || sR === 'Heel')) { c[g][sC][sR]++; } }); document.getElementById('male-total-count').textContent = c.male.total; document.getElementById('female-total-count').textContent = c.female.total; ['male', 'female'].forEach(g => { classes.forEach(cl => { const sC = cl.toLowerCase(); document.getElementById(`${g}-${sC}-face`).textContent = c[g][cl].Face; document.getElementById(`${g}-${sC}-heel`).textContent = c[g][cl].Heel; }); }); }
+
+    // --- *** THIS IS THE CORRECTED FUNCTION *** ---
+    function updateBreakdownCounters() {
+        const counts = { male: { total: 0 }, female: { total: 0 } };
+        ['male', 'female'].forEach(gender => {
+            classes.forEach(c => {
+                counts[gender][c] = { Face: 0, Heel: 0 };
+            });
+        });
+
+        draftedRoster.forEach(s => {
+            const gender = s.gender.toLowerCase();
+            const sClass = s.class;
+            const sRole = s.role;
+            counts[gender].total++;
+            if (classes.includes(sClass) && (sRole === 'Face' || sRole === 'Heel')) {
+                counts[gender][sClass][sRole]++;
+            }
+        });
+
+        document.getElementById('male-total-count').textContent = counts.male.total;
+        document.getElementById('female-total-count').textContent = counts.female.total;
+        ['male', 'female'].forEach(gender => {
+            classes.forEach(c => {
+                const sClass = c.toLowerCase();
+                document.getElementById(`${gender}-${sClass}-face`).textContent = counts[gender][c].Face;
+                document.getElementById(`${gender}-${sClass}-heel`).textContent = counts[gender][c].Heel;
+            });
+        });
+    }
+
     function checkSynergy() { const s = document.getElementById('synergy-bonus'); s.innerHTML = ''; const t = {}; draftedRoster.forEach(i => { if (i.team) t[i.team] = (t[i.team] || 0) + 1; }); let h = false; for (const T in t) { if (t[T] > 1) { if (!h) { s.innerHTML = '<h3>Synergy Bonuses</h3><ul id="synergy-list"></ul>'; h = true; } const l = s.querySelector('#synergy-list'); const i = document.createElement('li'); i.textContent = `${T} (${t[T]} members)`; l.appendChild(i); } } }
 
     // --- Export Logic ---
     function generateExport(format) { const t = draftedRoster.reduce((s, c) => s + c.cost, 0); const c = findCompletedTeams(); const r = findPotentialRivalries(); let sm = '', md = ''; sm += `ROSTER SUMMARY\n====================\n`; sm += `Total Superstars: ${draftedRoster.length}\nTotal Cost: $${t.toLocaleString()}\nBudget Remaining: $${budget.toLocaleString()}\n\n`; sm += `DRAFTED SUPERSTARS:\n`; draftedRoster.forEach(s => { sm += `- ${s.name} (${s.role} ${s.class})\n`; }); if (c.length > 0) { sm += `\nCOMPLETED TEAMS:\n`; c.forEach(t => { sm += `- ${t}\n`; }); } sm += `\nPOTENTIAL RIVALRIES:\n`; if (r.ideal.length > 0) { sm += `Ideal Matchups (High Ceiling):\n`; r.ideal.forEach(i => { sm += `- ${i.s1.name} vs. ${i.s2.name} [${i.type}]\n`; }); } if (r.specialist.length > 0) { sm += `Specialist Matchups (High Floor):\n`; r.specialist.forEach(i => { sm += `- ${i.s1.name} vs. ${i.s2.name} [${i.type}]\n`; }); } if (r.ideal.length === 0 && r.specialist.length === 0) { sm += `- No ideal rivalries found.\n`; } md += `# Roster Summary\n\n| Stat | Value |\n|:---|:---|\n`; md += `| Total Superstars | ${draftedRoster.length} |\n| Total Cost | $${t.toLocaleString()} |\n| Budget Remaining | $${budget.toLocaleString()} |\n\n## Drafted Superstars\n`; draftedRoster.forEach(s => { md += `* **${s.name}** (${s.role} ${s.class})\n`; }); if (c.length > 0) { md += `\n## Completed Teams\n`; c.forEach(t => { md += `* ${t}\n`; }); } md += `\n## Potential Rivalries\n`; if (r.ideal.length > 0) { md += `### Ideal Matchups (High Ceiling)\n`; r.ideal.forEach(i => { md += `* **${i.s1.name}** vs. **${i.s2.name}** _(${i.type})_\n`; }); } if (r.specialist.length > 0) { md += `### Specialist Matchups (High Floor)\n`; r.specialist.forEach(i => { md += `* **${i.s1.name}** vs. **${i.s2.name}** _(${i.type})_\n`; }); } if (r.ideal.length === 0 && r.specialist.length === 0) { md += `*No ideal rivalries found.*\n`; } if (format === 'clipboard') { navigator.clipboard.writeText(sm).then(() => alert('Roster summary copied!')); } else if (format === 'txt') { downloadFile('roster.txt', sm); } else if (format === 'md') { downloadFile('roster.md', md); } }
-    function findCompletedTeams() { const d = {}; draftedRoster.forEach(s => { if (s.team) { if (!d[s.team]) d[s.team] = []; d[s.team].push(s.name); } }); const c = []; for (const t in
+    function findCompletedTeams() { const d = {}; draftedRoster.forEach(s => { if (s.team) { if (!d[s.team]) d[s.team] = []; d[s.team].push(s.name); } }); const c = []; for (const t in d) { const T = allSuperstars.filter(s => s.team === t).length; if (d[t].length === T && T > 1) c.push(t); } return c; }
+    function findPotentialRivalries() { const r = { 'Fighter': 'Bruiser', 'Bruiser': 'Fighter', 'Cruiser': 'Giant', 'Giant': 'Cruiser' }; const p = { ideal: [], specialist: [] }; const f = draftedRoster.filter(s => s.role === 'Face'); const h = draftedRoster.filter(s => s.role === 'Heel'); for (const a of f) { for (const b of h) { if (a.gender !== b.gender) continue; if (r[a.class] === b.class) { p.ideal.push({ s1: a, s2: b, type: `${a.class} vs. ${b.class}` }); } else if (a.class === 'Specialist' && b.class !== 'Specialist') { p.specialist.push({ s1: a, s2: b, type: `Specialist vs. ${b.class}` }); } else if (b.class === 'Specialist' && a.class !== 'Specialist') { p.specialist.push({ s1: a, s2: b, type: `${a.class} vs. Specialist` }); } } } return p; }
+    function downloadFile(filename, content) { const e = document.createElement('a'); e.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content)); e.setAttribute('download', filename); e.style.display = 'none'; document.body.appendChild(e); e.click(); document.body.removeChild(e); }
+});
 
