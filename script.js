@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const exportMdBtn = document.getElementById('export-md-btn');
     const resetRosterBtn = document.getElementById('reset-roster-btn');
     const sortFilter = document.getElementById('sort-filter');
-    const columnSwitcher = document.getElementById('column-switcher'); // New selector
+    const columnSwitcher = document.getElementById('column-switcher');
 
     // --- State Variables ---
     let budget = 4000000;
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(data => {
             allSuperstars = data.superstars;
             loadState();
-            setupColumnSwitcher(); // New setup function
+            setupColumnSwitcher();
             resetFilters();
         });
 
@@ -50,11 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('filter-type')) populateValueSelect(event.target);
         applyFiltersAndSort();
     });
-    columnSwitcher.addEventListener('click', handleColumnSwitch); // New listener
+    columnSwitcher.addEventListener('click', handleColumnSwitch);
 
-    // --- START: New Column Switcher Logic ---
+    // --- Column Switcher Logic ---
     function setupColumnSwitcher() {
-        const savedCols = localStorage.getItem('wweDraftGridCols') || '2'; // Default to 2 columns
+        const savedCols = localStorage.getItem('wweDraftGridCols') || '2';
         setGridColumns(savedCols);
     }
 
@@ -67,17 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setGridColumns(numCols) {
-        // Remove all possible column classes
         superstarListContainer.classList.remove('grid-cols-1', 'grid-cols-2', 'grid-cols-3');
-        // Add the selected one
         superstarListContainer.classList.add(`grid-cols-${numCols}`);
-        // Update active button state
         const buttons = columnSwitcher.querySelectorAll('button');
         buttons.forEach(btn => {
             btn.classList.toggle('active', btn.dataset.columns === numCols);
         });
     }
-    // --- END: New Column Switcher Logic ---
 
     // --- State Management (Save/Load) ---
     function saveState() {
@@ -118,5 +114,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Export Logic ---
     function generateExport(format) { const t = draftedRoster.reduce((s, c) => s + c.cost, 0); const c = findCompletedTeams(); const r = findPotentialRivalries(); let sm = '', md = ''; sm += `ROSTER SUMMARY\n====================\n`; sm += `Total Superstars: ${draftedRoster.length}\nTotal Cost: $${t.toLocaleString()}\nBudget Remaining: $${budget.toLocaleString()}\n\n`; sm += `DRAFTED SUPERSTARS:\n`; draftedRoster.forEach(s => { sm += `- ${s.name} (${s.role} ${s.class})\n`; }); if (c.length > 0) { sm += `\nCOMPLETED TEAMS:\n`; c.forEach(t => { sm += `- ${t}\n`; }); } sm += `\nPOTENTIAL RIVALRIES:\n`; if (r.ideal.length > 0) { sm += `Ideal Matchups (High Ceiling):\n`; r.ideal.forEach(i => { sm += `- ${i.s1.name} vs. ${i.s2.name} [${i.type}]\n`; }); } if (r.specialist.length > 0) { sm += `Specialist Matchups (High Floor):\n`; r.specialist.forEach(i => { sm += `- ${i.s1.name} vs. ${i.s2.name} [${i.type}]\n`; }); } if (r.ideal.length === 0 && r.specialist.length === 0) { sm += `- No ideal rivalries found.\n`; } md += `# Roster Summary\n\n| Stat | Value |\n|:---|:---|\n`; md += `| Total Superstars | ${draftedRoster.length} |\n| Total Cost | $${t.toLocaleString()} |\n| Budget Remaining | $${budget.toLocaleString()} |\n\n## Drafted Superstars\n`; draftedRoster.forEach(s => { md += `* **${s.name}** (${s.role} ${s.class})\n`; }); if (c.length > 0) { md += `\n## Completed Teams\n`; c.forEach(t => { md += `* ${t}\n`; }); } md += `\n## Potential Rivalries\n`; if (r.ideal.length > 0) { md += `### Ideal Matchups (High Ceiling)\n`; r.ideal.forEach(i => { md += `* **${i.s1.name}** vs. **${i.s2.name}** _(${i.type})_\n`; }); } if (r.specialist.length > 0) { md += `### Specialist Matchups (High Floor)\n`; r.specialist.forEach(i => { md += `* **${i.s1.name}** vs. **${i.s2.name}** _(${i.type})_\n`; }); } if (r.ideal.length === 0 && r.specialist.length === 0) { md += `*No ideal rivalries found.*\n`; } if (format === 'clipboard') { navigator.clipboard.writeText(sm).then(() => alert('Roster summary copied!')); } else if (format === 'txt') { downloadFile('roster.txt', sm); } else if (format === 'md') { downloadFile('roster.md', md); } }
-    function findCompletedTeams() { const d = {}; draftedRoster.forEach(s => { if (s.team) { if (!d[s.team]) d[s.team] = []; d[s.team].push(s.name); } }); const c = []; for (const t in
+    function findCompletedTeams() { const d = {}; draftedRoster.forEach(s => { if (s.team) { if (!d[s.team]) d[s.team] = []; d[s.team].push(s.name); } }); const c = []; for (const t in d) { const T = allSuperstars.filter(s => s.team === t).length; if (d[t].length === T && T > 1) c.push(t); } return c; }
+    function findPotentialRivalries() { const r = { 'Fighter': 'Bruiser', 'Bruiser': 'Fighter', 'Cruiser': 'Giant', 'Giant': 'Cruiser' }; const p = { ideal: [], specialist: [] }; const f = draftedRoster.filter(s => s.role === 'Face'); const h = draftedRoster.filter(s => s.role === 'Heel'); for (const a of f) { for (const b of h) { if (a.gender !== b.gender) continue; if (r[a.class] === b.class) { p.ideal.push({ s1: a, s2: b, type: `${a.class} vs. ${b.class}` }); } else if (a.class === 'Specialist' && b.class !== 'Specialist') { p.specialist.push({ s1: a, s2: b, type: `Specialist vs. ${b.class}` }); } else if (b.class === 'Specialist' && a.class !== 'Specialist') { p.specialist.push({ s1: a, s2: b, type: `${a.class} vs. Specialist` }); } } } return p; }
+    
+    // This function was missing from the truncated file
+    function downloadFile(filename, content) {
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+});
 
